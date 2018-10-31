@@ -3,7 +3,7 @@
 # This scripts starts the CoffeeService.
 #
 
-echo Starting Thinger-SensorTag ...
+echo Starting CoffeeService ...
 
 # Starting the service
 java -jar target/coffeeservice.jar
