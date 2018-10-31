@@ -6,7 +6,7 @@ After=network.target
 [Service]
 Type=forking
 PIDFile=/var/run/mongod.pid
-ExecStart=/opt/mongodb/bin/mongod --config /etc/mongod.conf
+ExecStart=/opt/mongodb/bin/mongod --config /etc/mongodb.conf
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=always
 User=mongodb
