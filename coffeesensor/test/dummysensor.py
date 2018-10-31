@@ -30,11 +30,11 @@ def on_publish(client, userdata, mid):
 
 
 # Starting server
-print("CoffeeSensor (dummy) started - for stopping please press CRTL-c")
-print(" - MQTT-Broker:", MQTT_HOST)
-print(" - MQTT-Port:", MQTT_PORT)
-print(" - MQTT-Keepalive:", MQTT_KEEPALIVE_INTERVAL)
-print(" - MQTT-Topic:", MQTT_TOPIC)
+print "CoffeeSensor (dummy) started - for stopping please press CRTL-c"
+print " - MQTT-Broker:", MQTT_HOST
+print " - MQTT-Port:", MQTT_PORT
+print " - MQTT-Keepalive:", MQTT_KEEPALIVE_INTERVAL
+print " - MQTT-Topic:", MQTT_TOPIC
 
 # Initiate MQTT Client
 mqttc = mqtt.Client()
@@ -58,9 +58,9 @@ try:
         time.sleep(INTERVAL)
 
 except KeyboardInterrupt:
-    print("Strg-C called")
+    print "Strg-C called"
 
 finally:
-    print("CoffeeSensor stopped")
+    print "CoffeeSensor stopped"
     # Disconnect from MQTT_Broker
     mqttc.disconnect()
