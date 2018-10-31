@@ -1,18 +1,32 @@
 [Unit]
-Description=MongoDB Database Service
-Wants=network.target
-After=network.target
+Description=MongoDB Database Server
+After=multi-user.target
+Documentation=https://docs.mongodb.org/manual
 
 [Service]
-Type=forking
-PIDFile=/var/run/mongod.pid
-ExecStart=/opt/mongodb/bin/mongod --config /etc/mongodb.conf
-ExecReload=/bin/kill -HUP $MAINPID
-Restart=always
 User=mongodb
 Group=mongodb
-StandardOutput=syslog
-StandardError=syslog
+#EnvironmentFile=-/etc/default/mongodb
+ExecStart=/opt/mongodb/bin/mongod --config /etc/mongodb.conf
+PIDFile=/var/run/mongodb/mongod.pid
+# file size
+LimitFSIZE=infinity
+# cpu time
+LimitCPU=infinity
+# virtual memory size
+LimitAS=infinity
+# open files
+LimitNOFILE=64000
+# processes/threads
+LimitNPROC=64000
+# locked memory
+LimitMEMLOCK=infinity
+# total threads (user+kernel)
+TasksMax=infinity
+TasksAccounting=false
+
+# Recommended limits for for mongod as specified in
+# http://docs.mongodb.org/manual/reference/ulimit/#recommended-settings
 
 [Install]
 WantedBy=multi-user.target
