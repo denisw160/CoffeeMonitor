@@ -1,7 +1,7 @@
 ## CoffeeSensor
 
 This module starts the monitoring of the sensors (GPIO) and transmits the values to the MQTT broker. 
-This module is written in Python.
+This module is written in Python 2.x. For the connection to the mqtt broker the python lib from paho.mqtt is used.
 
 The connection of the hardware (sensors) can be found in the main folder under doc.
 
