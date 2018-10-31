@@ -1,0 +1,20 @@
+### Spring Boot Configuration ###
+spring:
+  # Database - MongoDB
+  data:
+    mongodb:
+      host: localhost
+      database: coffeesensor
+      port: 27017
+
+# Logging - alternative you can use logback with log rotation
+logging:
+  file: coffeeservice.log
+  level:
+    root: WARN
+    org:
+      springframework: INFO
+    me:
+      wirries:
+        coffeemonitor:
+          coffeeservice: DEBUG

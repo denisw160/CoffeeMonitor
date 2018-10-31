@@ -20,6 +20,9 @@
 *.tar.gz
 *.rar
 
+### Log Files ###
+*.log
+
 ### virtual machine crash logs ###
 hs_err_pid*
 
