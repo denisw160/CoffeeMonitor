@@ -19,10 +19,10 @@ APP_DIR=$(pwd -P)
 
 sudo useradd --system --user-group --home-dir /var/lib/mongodb --no-create-home --shell /bin/false mongodb
 
-sudo mkdir -P /var/lib/mongodb
+sudo mkdir -p /var/lib/mongodb
 sudo chown -R mongodb:mongodb /var/lib/mongodb
 
-sudo mkdir -P /var/log/mongodb
+sudo mkdir -p /var/log/mongodb
 sudo chown -R mongodb:mongodb /var/log/mongodb
 
 sudo apt-get install -y p7zip-full
