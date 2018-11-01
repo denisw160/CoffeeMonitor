@@ -6,7 +6,8 @@ This the web client of the CoffeeMonitor. The data from the CoffeeService will s
 The dashboard gives a quick overview over the coffee status. With the config site the parameter for 
 the calculation can be adjusted. In the history view you find the consummation of coffee over the time.   
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.3.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.4.
+UI is using Bootstrap.
 
 ### Development
 
