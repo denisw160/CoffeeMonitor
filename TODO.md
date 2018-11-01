@@ -10,3 +10,5 @@ https://dzone.com/articles/bootiful-development-with-spring-boot-and-angular
 
 https://auth0.com/blog/creating-beautiful-apps-with-angular-material/
 https://medium.com/codingthesmartway-com-blog/angular-material-and-angular-6-material-design-for-angular-6b1a3ee476f0
+
+angular add to homescreen

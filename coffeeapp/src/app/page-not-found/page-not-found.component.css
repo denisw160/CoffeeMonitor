@@ -1,0 +1,11 @@
+.center-card{
+  width: 50%;
+  margin: 10px auto;
+}
+
+.center-div{
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
