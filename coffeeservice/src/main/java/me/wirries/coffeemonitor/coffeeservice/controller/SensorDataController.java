@@ -22,7 +22,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api")
-//@CrossOrigin(origins = "http://localhost:80")
 public class SensorDataController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SensorDataController.class);
