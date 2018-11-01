@@ -19,6 +19,7 @@
 *.zip
 *.tar.gz
 *.rar
+*.gz
 
 ### Log Files ###
 *.log
