@@ -10,12 +10,12 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Tests for {@link SensorDataController}.
+ * Tests for {@link ApiController}.
  */
-public class SensorDataControllerTest extends CoffeeServiceRepositoryTests {
+public class ApiControllerTest extends CoffeeServiceRepositoryTests {
 
     @Autowired
-    private SensorDataController controller;
+    private ApiController controller;
 
     @Test
     public void getData() {

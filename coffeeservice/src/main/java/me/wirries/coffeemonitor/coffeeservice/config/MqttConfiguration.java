@@ -1,4 +1,4 @@
-package me.wirries.coffeemonitor.coffeeservice;
+package me.wirries.coffeemonitor.coffeeservice.config;
 
 import me.wirries.coffeemonitor.coffeeservice.handler.SensorMessageHandler;
 import me.wirries.coffeemonitor.coffeeservice.repo.SensorDataRepository;

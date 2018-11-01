@@ -1,4 +1,4 @@
-package me.wirries.coffeemonitor.coffeeservice;
+package me.wirries.coffeemonitor.coffeeservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

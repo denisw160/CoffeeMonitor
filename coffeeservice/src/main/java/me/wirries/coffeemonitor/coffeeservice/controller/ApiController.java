@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This is the REST controller for the data of the coffee sensor.
+ * This is the REST controller for the api of the coffee service.
+ * It's provides the access to the sensor data and the configuration.
  *
  * @author denisw
  * @version 1.0
@@ -22,9 +23,9 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api")
-public class SensorDataController {
+public class ApiController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SensorDataController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApiController.class);
 
     private SensorDataRepository repository;
 
@@ -34,7 +35,7 @@ public class SensorDataController {
      * @param repository Repository for the coffee sensor data
      */
     @Autowired
-    public SensorDataController(SensorDataRepository repository) {
+    public ApiController(SensorDataRepository repository) {
         this.repository = repository;
     }
 
@@ -71,5 +72,7 @@ public class SensorDataController {
         LOGGER.info("Get coffee sensor data for {}", id);
         return repository.findById(id).orElse(null);
     }
+
+    // TODO Adding REST Services for the configuration
 
 }
