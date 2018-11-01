@@ -1,9 +1,11 @@
 ## CoffeeService
 
+### Description
 This module provides the backend for the system. The Spring Boot application handles the incoming mqtt messages from the
 sensor and stores the data in a MongoDB. With rest services the data can be query from the clients. 
 This module is written in Java 1.8. For Spring Boot the version 2.1.0.RELEASE is used.
 
+### Scripts
 To install the required components, simply run the setup script. The installation requires SUDO rights.
 
     bash>setup.sh
