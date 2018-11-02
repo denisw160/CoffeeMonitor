@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import {SensorData} from './sensordata';
 import {Alive} from './alive';
 import {Config} from './config';
+import {Consumption} from './consumption';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +40,7 @@ export class ApiService {
    * Get all data directly from the database.
    */
   getData(): Observable<SensorData[]> {
-    return this._http.get<SensorData[]>('/api/data');
+    return this._http.get<SensorData[]>('/api/data/7days');
   }
 
   /**
@@ -47,6 +48,13 @@ export class ApiService {
    */
   getDataLatest(): Observable<SensorData> {
     return this._http.get<SensorData>('/api/data/latest');
+  }
+
+  /**
+   * Get the latest consumption from today.
+   */
+  getConsumptionLatest(): Observable<Consumption> {
+    return this._http.get<Consumption>('/api/consumption/latest');
   }
 
   // TODO Add service for configuration

@@ -79,11 +79,30 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateDashboard(t) {
-    console.log('Update data: ' + t + ' - ' + new Date()); // TODO REMOVE
+  /**
+   * Update the icon for the coffee machine. Shows of the sensors.
+   */
+  updateConsumption() {
+    const consumption = this._api.getConsumptionLatest();
+    consumption.subscribe(c => {
+      // console.log('Day: ' + c.day);
+      // console.log('Consumption: ' + c.consumption);
+      document.getElementById('coffee-consumption').innerText = String(c.consumption);
+      const timestamp = moment(c.day);
+      document.getElementById('coffee-consumption-updated').innerText = timestamp.format('ll');
+    });
+  }
 
+  /**
+   * Update all status information in the dashboard.
+   *
+   * @param t Time-Tick (only for debug)
+   */
+  updateDashboard(t) {
+    // console.log('Update data: ' + t + ' - ' + new Date());
     this.updateAliveStatus();
     this.updateFillAllocation();
+    this.updateConsumption();
   }
 
   ngOnInit() {
