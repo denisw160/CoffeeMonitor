@@ -14,6 +14,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.MessagingException;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -56,7 +57,7 @@ public class SensorMessageHandler implements MessageHandler {
                 SensorData data = new SensorData();
                 data.setId(ObjectId.get().toString());
                 String ts = StringUtils.substring(obj.get("timestamp").asText(), 0, 23);
-                Date timestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(ts);
+                Date timestamp = parseTimestamp(ts);
                 data.setTimestamp(timestamp);
                 data.setAllocated(obj.get("allocated").asBoolean(false));
                 data.setWeight(obj.get("weight").asDouble(0.0));
@@ -66,6 +67,14 @@ public class SensorMessageHandler implements MessageHandler {
                 LOGGER.error("Error while converting/storing message: " + msg, e);
             }
         }
+    }
+
+    private Date parseTimestamp(String ts) throws ParseException {
+        String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+        if (StringUtils.length(ts) == 19) {
+            pattern = "yyyy-MM-dd'T'HH:mm:ss";
+        }
+        return new SimpleDateFormat(pattern).parse(ts);
     }
 
 }
