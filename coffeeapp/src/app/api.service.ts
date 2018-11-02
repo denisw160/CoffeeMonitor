@@ -20,7 +20,7 @@ export class ApiService {
     })
   };
 
-  private mockUpMode: boolean; // TODO Add mockUp json data
+  private readonly mockUpMode: boolean;
 
   constructor(private _http: HttpClient) {
     this.mockUpMode = environment.mockUpMode;
@@ -33,7 +33,11 @@ export class ApiService {
    * Query the service, if the sensor is alive.
    */
   getAlive(): Observable<AliveModel> {
-    return this._http.get<AliveModel>('/api/alive');
+    if (this.mockUpMode) {
+      return this._http.get<AliveModel>('/assets/mock_api_alive.json');
+    } else {
+      return this._http.get<AliveModel>('/api/alive');
+    }
   }
 
   // Config Services
@@ -42,7 +46,11 @@ export class ApiService {
    * Query the config for the system.
    */
   getConfig(): Observable<ConfigModel> {
-    return this._http.get<ConfigModel>('/api/config');
+    if (this.mockUpMode) {
+      return this._http.get<ConfigModel>('/assets/mock_api_config.json');
+    } else {
+      return this._http.get<ConfigModel>('/api/config');
+    }
   }
 
   /**
@@ -56,27 +64,48 @@ export class ApiService {
   // Data Services
 
   /**
-   * Get all data directly from the database.
+   * Get all data directly from the database (7 days).
    */
   getData(): Observable<SensordataModel[]> {
-    return this._http.get<SensordataModel[]>('/api/data/7days');
+    if (this.mockUpMode) {
+      return this._http.get<SensordataModel[]>('/assets/mock_api_data_7days.json');
+    } else {
+      return this._http.get<SensordataModel[]>('/api/data/7days');
+    }
   }
 
   /**
    * Get the latest data entry from the database.
    */
   getDataLatest(): Observable<SensordataModel> {
-    return this._http.get<SensordataModel>('/api/data/latest');
+    if (this.mockUpMode) {
+      return this._http.get<SensordataModel>('/assets/mock_api_data_latest.json');
+    } else {
+      return this._http.get<SensordataModel>('/api/data/latest');
+    }
+  }
+
+  /**
+   * Get the all consumption for the last 7 days.
+   */
+  getConsumption(): Observable<ConsumptionModel[]> {
+    if (this.mockUpMode) {
+      return this._http.get<ConsumptionModel[]>('/assets/mock_api_consumption_7days.json');
+    } else {
+      return this._http.get<ConsumptionModel[]>('/api/consumption/latest');
+    }
   }
 
   /**
    * Get the latest consumption from today.
    */
   getConsumptionLatest(): Observable<ConsumptionModel> {
-    return this._http.get<ConsumptionModel>('/api/consumption/latest');
+    if (this.mockUpMode) {
+      return this._http.get<ConsumptionModel>('/assets/mock_api_consumption_latest.json');
+    } else {
+      return this._http.get<ConsumptionModel>('/api/consumption/latest');
+    }
   }
-
-  // TODO Add service for configuration
 
   dailyForecast() { // TODO Remove after testing
     return this._http.get('/assets/sampleweather.json')

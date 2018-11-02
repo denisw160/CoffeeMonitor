@@ -1,0 +1,1352 @@
+[
+  {
+    "id": null,
+    "timestamp": "2018-10-26T22:00:00.000+0000",
+    "weight": 222.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-26T23:00:00.000+0000",
+    "weight": 221.10000000000002,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T00:00:00.000+0000",
+    "weight": 220.00000000000003,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T01:00:00.000+0000",
+    "weight": 218.9,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T02:00:00.000+0000",
+    "weight": 217.25,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T03:00:00.000+0000",
+    "weight": 215.60000000000002,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T04:00:00.000+0000",
+    "weight": 214.50000000000003,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T05:00:00.000+0000",
+    "weight": 213.4,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T06:00:00.000+0000",
+    "weight": 211.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T07:00:00.000+0000",
+    "weight": 210.10000000000002,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T08:00:00.000+0000",
+    "weight": 209.00000000000003,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T09:00:00.000+0000",
+    "weight": 207.9,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T10:00:00.000+0000",
+    "weight": 206.25,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T11:00:00.000+0000",
+    "weight": 204.60000000000002,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T12:00:00.000+0000",
+    "weight": 203.50000000000003,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T13:00:00.000+0000",
+    "weight": 202.4,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T14:00:00.000+0000",
+    "weight": 200.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T15:00:00.000+0000",
+    "weight": 199.10000000000002,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T16:00:00.000+0000",
+    "weight": 198.00000000000003,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T17:00:00.000+0000",
+    "weight": 196.9,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T18:00:00.000+0000",
+    "weight": 195.25,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T19:00:00.000+0000",
+    "weight": 193.60000000000002,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T20:00:00.000+0000",
+    "weight": 192.50000000000003,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T21:00:00.000+0000",
+    "weight": 191.4,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T22:00:00.000+0000",
+    "weight": 189.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-27T23:00:00.000+0000",
+    "weight": 188.10000000000002,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T00:00:00.000+0000",
+    "weight": 186.45000000000002,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T02:00:00.000+0000",
+    "weight": 184.25,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T03:00:00.000+0000",
+    "weight": 182.60000000000002,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T04:00:00.000+0000",
+    "weight": 181.50000000000003,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T05:00:00.000+0000",
+    "weight": 180.4,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T06:00:00.000+0000",
+    "weight": 178.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T07:00:00.000+0000",
+    "weight": 177.10000000000002,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T08:00:00.000+0000",
+    "weight": 176.0,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T09:00:00.000+0000",
+    "weight": 174.9,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T10:00:00.000+0000",
+    "weight": 173.25,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T11:00:00.000+0000",
+    "weight": 171.60000000000002,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T12:00:00.000+0000",
+    "weight": 170.5,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T13:00:00.000+0000",
+    "weight": 169.4,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T14:00:00.000+0000",
+    "weight": 167.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T15:00:00.000+0000",
+    "weight": 166.10000000000002,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T16:00:00.000+0000",
+    "weight": 165.0,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T17:00:00.000+0000",
+    "weight": 163.9,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T18:00:00.000+0000",
+    "weight": 162.25,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T19:00:00.000+0000",
+    "weight": 160.60000000000002,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T20:00:00.000+0000",
+    "weight": 159.5,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T21:00:00.000+0000",
+    "weight": 158.4,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T22:00:00.000+0000",
+    "weight": 156.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-28T23:00:00.000+0000",
+    "weight": 155.10000000000002,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T00:00:00.000+0000",
+    "weight": 154.0,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T01:00:00.000+0000",
+    "weight": 152.9,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T02:00:00.000+0000",
+    "weight": 151.25,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T03:00:00.000+0000",
+    "weight": 149.60000000000002,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T04:00:00.000+0000",
+    "weight": 148.5,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T05:00:00.000+0000",
+    "weight": 147.4,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T06:00:00.000+0000",
+    "weight": 145.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T07:00:00.000+0000",
+    "weight": 144.10000000000002,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T08:00:00.000+0000",
+    "weight": 143.0,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T09:00:00.000+0000",
+    "weight": 141.9,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T10:00:00.000+0000",
+    "weight": 140.25,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T11:00:00.000+0000",
+    "weight": 138.60000000000002,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T12:00:00.000+0000",
+    "weight": 137.5,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T13:00:00.000+0000",
+    "weight": 136.4,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T14:00:00.000+0000",
+    "weight": 134.75,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T15:00:00.000+0000",
+    "weight": 133.10000000000002,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T16:00:00.000+0000",
+    "weight": 132.0,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T17:00:00.000+0000",
+    "weight": 130.9,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T18:00:00.000+0000",
+    "weight": 129.25,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T19:00:00.000+0000",
+    "weight": 127.60000000000001,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T20:00:00.000+0000",
+    "weight": 126.50000000000001,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T21:00:00.000+0000",
+    "weight": 125.4,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T22:00:00.000+0000",
+    "weight": 123.75000000000001,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-29T23:00:00.000+0000",
+    "weight": 122.10000000000001,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T00:00:00.000+0000",
+    "weight": 121.00000000000001,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T01:00:00.000+0000",
+    "weight": 119.9,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T02:00:00.000+0000",
+    "weight": 118.25,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T03:00:00.000+0000",
+    "weight": 116.60000000000001,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T04:00:00.000+0000",
+    "weight": 115.50000000000001,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T05:00:00.000+0000",
+    "weight": 114.4,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T06:00:00.000+0000",
+    "weight": 112.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T07:00:00.000+0000",
+    "weight": 111.10000000000001,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T08:00:00.000+0000",
+    "weight": 110.00000000000001,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T09:00:00.000+0000",
+    "weight": 108.9,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T10:00:00.000+0000",
+    "weight": 107.25,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T11:00:00.000+0000",
+    "weight": 105.60000000000001,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T12:00:00.000+0000",
+    "weight": 104.50000000000001,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T13:00:00.000+0000",
+    "weight": 103.4,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T14:00:00.000+0000",
+    "weight": 101.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T15:00:00.000+0000",
+    "weight": 100.10000000000001,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T16:00:00.000+0000",
+    "weight": 99.00000000000001,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T17:00:00.000+0000",
+    "weight": 97.9,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T18:00:00.000+0000",
+    "weight": 96.25,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T19:00:00.000+0000",
+    "weight": 94.60000000000001,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T20:00:00.000+0000",
+    "weight": 93.50000000000001,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T21:00:00.000+0000",
+    "weight": 92.4,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T22:00:00.000+0000",
+    "weight": 90.75,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-30T23:00:00.000+0000",
+    "weight": 89.10000000000001,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T00:00:00.000+0000",
+    "weight": 88.0,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T01:00:00.000+0000",
+    "weight": 86.9,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T02:00:00.000+0000",
+    "weight": 85.25,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T03:00:00.000+0000",
+    "weight": 83.60000000000001,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T04:00:00.000+0000",
+    "weight": 82.5,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T05:00:00.000+0000",
+    "weight": 81.4,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T06:00:00.000+0000",
+    "weight": 79.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T07:00:00.000+0000",
+    "weight": 78.10000000000001,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T08:00:00.000+0000",
+    "weight": 77.0,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T09:00:00.000+0000",
+    "weight": 75.9,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T10:00:00.000+0000",
+    "weight": 74.25,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T11:00:00.000+0000",
+    "weight": 72.60000000000001,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T12:00:00.000+0000",
+    "weight": 71.5,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T13:00:00.000+0000",
+    "weight": 70.4,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T14:00:00.000+0000",
+    "weight": 68.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T15:00:00.000+0000",
+    "weight": 67.10000000000001,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T16:00:00.000+0000",
+    "weight": 66.0,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T17:00:00.000+0000",
+    "weight": 64.9,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T18:00:00.000+0000",
+    "weight": 63.25,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T19:00:00.000+0000",
+    "weight": 61.60000000000001,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T20:00:00.000+0000",
+    "weight": 60.50000000000001,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T21:00:00.000+0000",
+    "weight": 59.400000000000006,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T22:00:00.000+0000",
+    "weight": 57.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-10-31T23:00:00.000+0000",
+    "weight": 56.1,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T00:00:00.000+0000",
+    "weight": 55.00000000000001,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T01:00:00.000+0000",
+    "weight": 53.900000000000006,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T02:00:00.000+0000",
+    "weight": 52.25,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T03:00:00.000+0000",
+    "weight": 50.6,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T04:00:00.000+0000",
+    "weight": 49.50000000000001,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T05:00:00.000+0000",
+    "weight": 48.400000000000006,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T06:00:00.000+0000",
+    "weight": 46.75,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T07:00:00.000+0000",
+    "weight": 45.1,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T08:00:00.000+0000",
+    "weight": 44.0,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T09:00:00.000+0000",
+    "weight": 42.900000000000006,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T10:00:00.000+0000",
+    "weight": 41.25,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T11:00:00.000+0000",
+    "weight": 39.6,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T12:00:00.000+0000",
+    "weight": 38.5,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T13:00:00.000+0000",
+    "weight": 37.400000000000006,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T14:00:00.000+0000",
+    "weight": 35.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T15:00:00.000+0000",
+    "weight": 34.1,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T16:00:00.000+0000",
+    "weight": 33.0,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T17:00:00.000+0000",
+    "weight": 31.900000000000002,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T18:00:00.000+0000",
+    "weight": 30.250000000000004,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T19:00:00.000+0000",
+    "weight": 28.6,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T20:00:00.000+0000",
+    "weight": 27.500000000000004,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T21:00:00.000+0000",
+    "weight": 26.400000000000002,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T22:00:00.000+0000",
+    "weight": 24.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-01T23:00:00.000+0000",
+    "weight": 23.1,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T00:00:00.000+0000",
+    "weight": 22.0,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T01:00:00.000+0000",
+    "weight": 20.900000000000002,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T02:00:00.000+0000",
+    "weight": 19.25,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T03:00:00.000+0000",
+    "weight": 17.6,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T04:00:00.000+0000",
+    "weight": 16.5,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T05:00:00.000+0000",
+    "weight": 15.400000000000002,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T06:00:00.000+0000",
+    "weight": 13.75,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T07:00:00.000+0000",
+    "weight": 12.100000000000001,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T08:00:00.000+0000",
+    "weight": 11.0,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T09:00:00.000+0000",
+    "weight": 9.9,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T10:00:00.000+0000",
+    "weight": 8.25,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T11:00:00.000+0000",
+    "weight": 6.6000000000000005,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T12:00:00.000+0000",
+    "weight": 5.5,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T13:00:00.000+0000",
+    "weight": 4.4,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T14:00:00.000+0000",
+    "weight": 2.75,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T15:00:00.000+0000",
+    "weight": 1.1,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T17:00:00.000+0000",
+    "weight": 1.5747603350838715,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T18:00:00.000+0000",
+    "weight": 1.5478227132166829,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T19:00:00.000+0000",
+    "weight": 1.5488585428857973,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T19:57:00.000+0000",
+    "weight": 1.8766878347711722,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T19:58:00.000+0000",
+    "weight": 0.9000503215429378,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T19:59:00.000+0000",
+    "weight": 1.4348015840467443,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:00:00.000+0000",
+    "weight": 1.671580246556723,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:01:00.000+0000",
+    "weight": 1.9356166972404365,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:02:00.000+0000",
+    "weight": 1.5276362616000505,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:03:00.000+0000",
+    "weight": 1.135788527848619,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:04:00.000+0000",
+    "weight": 1.8442810896523525,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:05:00.000+0000",
+    "weight": 1.2856832167903263,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:06:00.000+0000",
+    "weight": 1.05557369831329,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:07:00.000+0000",
+    "weight": 1.4011360147748249,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:08:00.000+0000",
+    "weight": 1.6492712801480223,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:09:00.000+0000",
+    "weight": 1.4822320085782024,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:10:00.000+0000",
+    "weight": 1.2033682188190342,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:11:00.000+0000",
+    "weight": 1.670880059625572,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:12:00.000+0000",
+    "weight": 1.5496850662479618,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:13:00.000+0000",
+    "weight": 1.074247522607714,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:14:00.000+0000",
+    "weight": 1.3170523385495962,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:15:00.000+0000",
+    "weight": 1.7724033731963633,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:16:00.000+0000",
+    "weight": 1.1664594597067932,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:17:00.000+0000",
+    "weight": 1.998816823499307,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:18:00.000+0000",
+    "weight": 1.696212361015161,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:19:00.000+0000",
+    "weight": 1.5423756407227311,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:20:00.000+0000",
+    "weight": 1.2968673382653342,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:21:00.000+0000",
+    "weight": 1.5069443641794085,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:22:00.000+0000",
+    "weight": 2.1273819438044614,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:23:00.000+0000",
+    "weight": 1.8133468557854637,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:24:00.000+0000",
+    "weight": 2.11980843496785,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:25:00.000+0000",
+    "weight": 1.7439206722965226,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:26:00.000+0000",
+    "weight": 1.5607612873414625,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:27:00.000+0000",
+    "weight": 0.9214971496119003,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:28:00.000+0000",
+    "weight": 1.4593185700442237,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:29:00.000+0000",
+    "weight": 1.4401561226193187,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:30:00.000+0000",
+    "weight": 1.3148745192374884,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:31:00.000+0000",
+    "weight": 1.3657390913522753,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:32:00.000+0000",
+    "weight": 1.339792421735207,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:33:00.000+0000",
+    "weight": 1.8592646163761932,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:34:00.000+0000",
+    "weight": 1.1684793698879314,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:35:00.000+0000",
+    "weight": 2.064732064520352,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:36:00.000+0000",
+    "weight": 1.50871524354388,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:37:00.000+0000",
+    "weight": 1.497459634938987,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:38:00.000+0000",
+    "weight": 2.170029581212333,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:39:00.000+0000",
+    "weight": 1.8385165369068883,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:40:00.000+0000",
+    "weight": 1.1655903564045558,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:41:00.000+0000",
+    "weight": 1.145599399505494,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:42:00.000+0000",
+    "weight": 2.202719726304943,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:43:00.000+0000",
+    "weight": 1.5333742231812564,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:44:00.000+0000",
+    "weight": 1.3138807799731824,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:45:00.000+0000",
+    "weight": 1.8952208639718724,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:46:00.000+0000",
+    "weight": 1.3665769268691588,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:47:00.000+0000",
+    "weight": 1.247875402361826,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:48:00.000+0000",
+    "weight": 2.014150382176194,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:49:00.000+0000",
+    "weight": 1.889277938218148,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:50:00.000+0000",
+    "weight": 1.5988841755210519,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:51:00.000+0000",
+    "weight": 1.374292118362113,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:52:00.000+0000",
+    "weight": 1.546875846812607,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:53:00.000+0000",
+    "weight": 1.6113577596857207,
+    "allocated": false
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:54:00.000+0000",
+    "weight": 1.9024313071090138,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:55:00.000+0000",
+    "weight": 2.099254476980155,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:56:00.000+0000",
+    "weight": 1.576202134592887,
+    "allocated": true
+  },
+  {
+    "id": null,
+    "timestamp": "2018-11-02T20:57:00.000+0000",
+    "weight": 1.47544,
+    "allocated": false
+  }
+]
