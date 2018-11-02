@@ -12,7 +12,7 @@
 .img-coffee-status {
   position: absolute;
   left: 35%;
-  top: 0%;
+  top: 0;
   width: 64px;
   height: 64px;
 }
@@ -34,4 +34,13 @@
     width: 96px;
     height: 96px;
   }
+}
+
+/* *** Card Icons *** */
+
+.img-dashboard-icon {
+  margin-top: 15px;
+  margin-left: 15px;
+  width: 64px;
+  height: 64px;
 }
