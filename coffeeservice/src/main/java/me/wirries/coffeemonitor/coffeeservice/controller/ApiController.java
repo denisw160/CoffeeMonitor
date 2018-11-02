@@ -1,15 +1,15 @@
 package me.wirries.coffeemonitor.coffeeservice.controller;
 
 import me.wirries.coffeemonitor.coffeeservice.model.Alive;
+import me.wirries.coffeemonitor.coffeeservice.model.Config;
 import me.wirries.coffeemonitor.coffeeservice.model.SensorData;
+import me.wirries.coffeemonitor.coffeeservice.repo.ConfigRepository;
 import me.wirries.coffeemonitor.coffeeservice.repo.SensorDataRepository;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,16 +29,19 @@ public class ApiController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiController.class);
 
-    private SensorDataRepository repository;
+    private SensorDataRepository dataRepository;
+    private ConfigRepository configRepository;
 
     /**
      * Constructor with AutoWiring the dependencies.
      *
-     * @param repository Repository for the coffee sensor data
+     * @param dataRepository Repository for the coffee sensor data
      */
     @Autowired
-    public ApiController(SensorDataRepository repository) {
-        this.repository = repository;
+    public ApiController(SensorDataRepository dataRepository,
+                         ConfigRepository configRepository) {
+        this.dataRepository = dataRepository;
+        this.configRepository = configRepository;
     }
 
     /**
@@ -63,7 +66,6 @@ public class ApiController {
         return alive;
     }
 
-
     /**
      * Return all sensor data from the coffee sensor.
      *
@@ -72,7 +74,7 @@ public class ApiController {
     @GetMapping("/data")
     public List<SensorData> getData() {
         LOGGER.info("Get all coffee sensor data ...");
-        return new ArrayList<>(repository.findAll());
+        return new ArrayList<>(dataRepository.findAll());
     }
 
     /**
@@ -83,7 +85,7 @@ public class ApiController {
     @GetMapping("/data/latest")
     public SensorData getDataLatest() {
         LOGGER.info("Get latest coffee sensor data");
-        SensorData data = repository.findTopByOrderByTimestampDesc();
+        SensorData data = dataRepository.findTopByOrderByTimestampDesc();
         return (data != null) ? data : new SensorData();
     }
 
@@ -96,9 +98,36 @@ public class ApiController {
     @GetMapping("/data/{id}")
     public SensorData getDataById(@PathVariable("id") String id) {
         LOGGER.info("Get coffee sensor data for {}", id);
-        return repository.findById(id).orElse(null);
+        return dataRepository.findById(id).orElse(null);
     }
 
-    // TODO Adding REST Services for the configuration
+    // TODO Adding REST Services for the consumption
+
+    /**
+     * Get latest configuration.
+     *
+     * @return Config
+     */
+    @GetMapping("/config")
+    public Config getConfig() {
+        LOGGER.info("Get latest configuration");
+        Config config = configRepository.findTopByOrderByTimestampDesc();
+        return (config != null) ? config : new Config(2.8);
+    }
+
+    /**
+     * Update the configuration.
+     *
+     * @param config Config
+     */
+    @PutMapping("/config")
+    public void setConfig(@RequestBody Config config) {
+        LOGGER.info("Storing the configuration");
+        if (config != null) {
+            config.setId(ObjectId.get().toString());
+            config.setTimestamp(new Date());
+            configRepository.save(config);
+        }
+    }
 
 }

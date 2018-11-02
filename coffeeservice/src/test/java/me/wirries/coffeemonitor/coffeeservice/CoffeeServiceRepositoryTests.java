@@ -1,5 +1,6 @@
 package me.wirries.coffeemonitor.coffeeservice;
 
+import me.wirries.coffeemonitor.coffeeservice.model.Config;
 import me.wirries.coffeemonitor.coffeeservice.model.SensorData;
 import me.wirries.coffeemonitor.coffeeservice.repo.SensorDataRepository;
 import org.bson.types.ObjectId;
@@ -22,6 +23,7 @@ public abstract class CoffeeServiceRepositoryTests extends CoffeeServiceApplicat
 
     @Before
     public void setUp() {
+        // SensorData
         template.dropCollection(SensorData.class);
 
         Date now = new Date();
@@ -33,6 +35,14 @@ public abstract class CoffeeServiceRepositoryTests extends CoffeeServiceApplicat
             data.setWeight(i * 1.1);
             template.save(data);
         }
+
+        // Config
+        template.dropCollection(Config.class);
+        Config config = new Config();
+        config.setId(ObjectId.get().toString());
+        config.setTimestamp(new Date(now.getTime()));
+        config.setMaxWeight(100 * 1.1);
+        template.save(config);
     }
 
     public MongoTemplate getTemplate() {

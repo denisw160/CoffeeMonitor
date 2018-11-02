@@ -4,7 +4,7 @@ import me.wirries.coffeemonitor.coffeeservice.model.SensorData;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
- * This repository handles the objects between the application and the database.
+ * This repository handles the sensor data between the application and the database.
  */
 public interface SensorDataRepository extends MongoRepository<SensorData, String> {
 

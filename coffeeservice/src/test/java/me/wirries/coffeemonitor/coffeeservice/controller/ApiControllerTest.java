@@ -2,6 +2,7 @@ package me.wirries.coffeemonitor.coffeeservice.controller;
 
 import me.wirries.coffeemonitor.coffeeservice.CoffeeServiceRepositoryTests;
 import me.wirries.coffeemonitor.coffeeservice.model.Alive;
+import me.wirries.coffeemonitor.coffeeservice.model.Config;
 import me.wirries.coffeemonitor.coffeeservice.model.SensorData;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +78,52 @@ public class ApiControllerTest extends CoffeeServiceRepositoryTests {
 
         data = controller.getDataById("unknown");
         assertNull(data);
+    }
+
+    @Test
+    public void getConfig() {
+        Config config = controller.getConfig();
+        assertNotNull(config);
+        assertNotNull(config.getId());
+        assertNotNull(config.getTimestamp());
+        assertNotNull(config.getMaxWeight());
+
+        // no data
+        getTemplate().dropCollection(Config.class);
+        config = controller.getConfig();
+        assertNotNull(config);
+        assertNull(config.getId());
+    }
+
+    @Test
+    public void setConfig() {
+        Config config = controller.getConfig();
+        assertNotNull(config);
+        String id = config.getId();
+        assertNotNull(id);
+
+        Config c = new Config();
+        c.setMaxWeight(5.0);
+        controller.setConfig(c);
+
+        config = controller.getConfig();
+        assertNotNull(config);
+        assertNotEquals(id, config.getId());
+        assertEquals(5.0, config.getMaxWeight(), 0.0);
+
+        // no data
+        getTemplate().dropCollection(Config.class);
+        config = controller.getConfig();
+        assertNotNull(config);
+        assertNull(config.getId());
+
+        c = new Config();
+        c.setMaxWeight(5.0);
+        controller.setConfig(c);
+
+        config = controller.getConfig();
+        assertNotNull(config);
+        assertEquals(5.0, config.getMaxWeight(), 0.0);
     }
 
 }
