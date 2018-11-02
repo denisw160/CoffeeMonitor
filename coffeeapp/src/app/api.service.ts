@@ -7,13 +7,18 @@ import {SensorData} from './sensordata';
 import {Alive} from './alive';
 import {Config} from './config';
 import {Consumption} from './consumption';
+import {environment} from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
+  private mockUpMode: boolean; // TODO Add mockUp json data
+
   constructor(private _http: HttpClient) {
+    this.mockUpMode = environment.mockUpMode;
+    // console.debug('Run services in mockUp mode: ' + this.mockUpMode);
   }
 
   // Status Services

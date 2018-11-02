@@ -1,3 +1,7 @@
+/**
+ * Parameter for environment - Production Version
+ */
 export const environment = {
-  production: true
+  production: true,
+  mockUpMode: false
 };
