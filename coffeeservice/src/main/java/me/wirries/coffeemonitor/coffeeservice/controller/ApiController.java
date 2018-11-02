@@ -9,11 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
-import static java.util.Calendar.DATE;
+import static java.util.Calendar.*;
 import static org.apache.commons.lang3.time.DateUtils.*;
 
 /**
@@ -91,6 +89,105 @@ public class ApiController {
     }
 
     /**
+     * Get latest data data for the last 7 days.
+     * The data will be aggregated and shown on a hourly basis. Only the last hour will shown on an minute basis.
+     *
+     * @return SensorData
+     */
+    @GetMapping("/data/7days")
+    public List<SensorData> getData7Days() {
+        LOGGER.info("Get sensor data for the last 7 days");
+        Date timestamp = addDays(truncate(new Date(), DATE), -6);
+        return aggregateSensorData(dataRepository.findAfterTimestamp(timestamp));
+    }
+
+    // optimize and cleanup code - reduce code duplication
+    private List<SensorData> aggregateSensorData(List<SensorData> data) {
+        List<SensorData> list = new ArrayList<>();
+
+        Date now = new Date();
+
+        SensorData n = null;
+        final List<Double> weightList = new ArrayList<>();
+        final List<Boolean> allocatedList = new ArrayList<>();
+        for (SensorData s : data) {
+            // Pre-condition: first element
+            if (n == null) {
+                n = new SensorData(truncate(s.getTimestamp(), HOUR));
+                list.add(n);
+
+                weightList.clear();
+                allocatedList.clear();
+            }
+
+            if ((now.getTime() - s.getTimestamp().getTime()) <= (60 * 60 * 1000)) {
+                // Last 60 minutes
+                if (isSameMinute(n.getTimestamp(), s.getTimestamp())) {
+                    // Collecting the values of the same hour
+                    weightList.add(s.getWeight());
+                    allocatedList.add(s.getAllocated());
+
+                } else {
+                    // Switch in the minute - update values and start with next minute
+                    OptionalDouble average = weightList.stream().mapToDouble(a -> a).average();
+                    n.setWeight((average.isPresent()) ? average.getAsDouble() : 0.0);
+
+                    boolean containsFalse = allocatedList.stream().anyMatch(t -> !t);
+                    n.setAllocated(!containsFalse);
+
+                    // New element
+                    n = new SensorData(truncate(s.getTimestamp(), MINUTE));
+                    list.add(n);
+
+                    weightList.clear();
+                    weightList.add(s.getWeight());
+
+                    allocatedList.clear();
+                    allocatedList.add(s.getAllocated());
+                }
+
+
+            } else {
+                // Older data
+                if (isSameHour(n.getTimestamp(), s.getTimestamp())) {
+                    // Collecting the values of the same hour
+                    weightList.add(s.getWeight());
+                    allocatedList.add(s.getAllocated());
+
+                } else {
+                    // Switch in the hour - update values and start with next hour
+                    OptionalDouble average = weightList.stream().mapToDouble(a -> a).average();
+                    n.setWeight((average.isPresent()) ? average.getAsDouble() : 0.0);
+
+                    boolean containsFalse = allocatedList.stream().anyMatch(t -> !t);
+                    n.setAllocated(!containsFalse);
+
+                    // New element
+                    n = new SensorData(truncate(s.getTimestamp(), HOUR));
+                    list.add(n);
+
+                    weightList.clear();
+                    weightList.add(s.getWeight());
+
+                    allocatedList.clear();
+                    allocatedList.add(s.getAllocated());
+                }
+            }
+        }
+
+        // handle the last element
+        if (!weightList.isEmpty()) {
+            OptionalDouble average = weightList.stream().mapToDouble(a -> a).average();
+            n.setWeight((average.isPresent()) ? average.getAsDouble() : 0.0);
+
+            boolean containsFalse = allocatedList.stream().anyMatch(t -> !t);
+            n.setAllocated(!containsFalse);
+        }
+
+        return list;
+    }
+
+    /**
      * Get data by id.
      *
      * @param id Id of the data entry
@@ -110,7 +207,7 @@ public class ApiController {
     @GetMapping("/consumption")
     public List<Consumption> getConsumption() {
         LOGGER.info("Collecting all consumption data ...");
-        return aggregate(getData());
+        return aggregateConsumption(getData());
     }
 
     /**
@@ -122,7 +219,7 @@ public class ApiController {
     public Consumption getConsumptionLatest() {
         LOGGER.info("Get latest consumption data");
         Date timestamp = addDays(truncate(new Date(), DATE), 0);
-        List<Consumption> data = aggregate(dataRepository.findAfterTimestamp(timestamp));
+        List<Consumption> data = aggregateConsumption(dataRepository.findAfterTimestamp(timestamp));
         return (data.isEmpty()) ? new Consumption() : data.get(0);
     }
 
@@ -135,7 +232,7 @@ public class ApiController {
     public List<Consumption> getConsumption7Days() {
         LOGGER.info("Get consumption data for the last 7 days");
         Date timestamp = addDays(truncate(new Date(), DATE), -6);
-        return aggregate(dataRepository.findAfterTimestamp(timestamp));
+        return aggregateConsumption(dataRepository.findAfterTimestamp(timestamp));
     }
 
     /**
@@ -144,7 +241,7 @@ public class ApiController {
      * @param data List of sensor data / ordered by timestamp
      * @return List of consumption
      */
-    private List<Consumption> aggregate(List<SensorData> data) {
+    private List<Consumption> aggregateConsumption(List<SensorData> data) {
         List<Consumption> list = new ArrayList<>();
 
         boolean state = false;
@@ -192,6 +289,61 @@ public class ApiController {
         }
 
         return new GenericResponse<>(500, "No configuration posted.");
+    }
+
+    /**
+     * Is the same hour?
+     */
+    private static boolean isSameHour(final Date date1, final Date date2) {
+        if (date1 == null || date2 == null) {
+            throw new IllegalArgumentException("The date must not be null");
+        }
+        final Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+        final Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+        return isSameHour(cal1, cal2);
+    }
+
+    /**
+     * Is the same hour?
+     */
+    private static boolean isSameHour(final Calendar cal1, final Calendar cal2) {
+        if (cal1 == null || cal2 == null) {
+            throw new IllegalArgumentException("The date must not be null");
+        }
+        return cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA) &&
+                cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) &&
+                cal1.get(Calendar.HOUR) == cal2.get(Calendar.HOUR);
+    }
+
+    /**
+     * Is the same minute?
+     */
+    private static boolean isSameMinute(final Date date1, final Date date2) {
+        if (date1 == null || date2 == null) {
+            throw new IllegalArgumentException("The date must not be null");
+        }
+        final Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+        final Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+        return isSameMinute(cal1, cal2);
+    }
+
+    /**
+     * Is the same minute?
+     */
+    private static boolean isSameMinute(final Calendar cal1, final Calendar cal2) {
+        if (cal1 == null || cal2 == null) {
+            throw new IllegalArgumentException("The date must not be null");
+        }
+        return cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA) &&
+                cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) &&
+                cal1.get(Calendar.HOUR) == cal2.get(Calendar.HOUR) &&
+                cal1.get(Calendar.MINUTE) == cal2.get(Calendar.MINUTE);
     }
 
 }

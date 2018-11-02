@@ -1,7 +1,6 @@
 package me.wirries.coffeemonitor.coffeeservice.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -26,6 +25,10 @@ public class SensorData {
 
     public SensorData() {
         // default constructor
+    }
+
+    public SensorData(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getId() {

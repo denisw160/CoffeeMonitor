@@ -69,6 +69,11 @@ public class ApiControllerTest extends CoffeeServiceRepositoryTests {
     }
 
     @Test
+    public void getData7Days() {
+        // TODO Test
+    }
+
+    @Test
     public void getDataById() {
         SensorData data = controller.getData().get(0);
         assertNotNull(data);
