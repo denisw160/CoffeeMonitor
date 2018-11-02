@@ -26,18 +26,18 @@ export class ConfigComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Submitting configuration: ' + this.config.maxWeight);
+    // console.log('Submitting configuration: ' + this.config.maxWeight);
 
     this.showSuccess = false;
     this.showError = false;
 
     const request = this._api.putConfig(this.config);
     request.subscribe(data => {
-        console.log('Submit success: ' + data['statusCode']);
+        // console.log('Submit success: ' + data['statusCode']);
         this.showSuccess = true;
       },
       error => {
-        console.log('Submit failed: ' + error['statusCode']);
+        // console.log('Submit failed: ' + error['statusCode']);
         this.showError = true;
       });
   }
