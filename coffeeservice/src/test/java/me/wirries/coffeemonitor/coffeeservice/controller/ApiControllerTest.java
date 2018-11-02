@@ -43,6 +43,12 @@ public class ApiControllerTest extends CoffeeServiceRepositoryTests {
         List<SensorData> data = controller.getData();
         assertNotNull(data);
         assertEquals(100, data.size());
+
+        // no data
+        getTemplate().dropCollection(SensorData.class);
+        data = controller.getData();
+        assertNotNull(data);
+        assertTrue(data.isEmpty());
     }
 
     @Test
@@ -50,6 +56,12 @@ public class ApiControllerTest extends CoffeeServiceRepositoryTests {
         SensorData data = controller.getDataLatest();
         assertNotNull(data);
         assertEquals(1.1, data.getWeight(), 0.0);
+
+        // no data
+        getTemplate().dropCollection(SensorData.class);
+        data = controller.getDataLatest();
+        assertNotNull(data);
+        assertNull(data.getId());
     }
 
     @Test

@@ -83,7 +83,8 @@ public class ApiController {
     @GetMapping("/data/latest")
     public SensorData getDataLatest() {
         LOGGER.info("Get latest coffee sensor data");
-        return repository.findTopByOrderByTimestampDesc();
+        SensorData data = repository.findTopByOrderByTimestampDesc();
+        return (data != null) ? data : new SensorData();
     }
 
     /**
