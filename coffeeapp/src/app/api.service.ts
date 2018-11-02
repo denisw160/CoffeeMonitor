@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 
 import {SensorData} from './sensordata';
 import {Alive} from './alive';
+import {Config} from './config';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,15 @@ export class ApiService {
    */
   getAlive(): Observable<Alive> {
     return this._http.get<Alive>('/api/alive');
+  }
+
+  // Config Services
+
+  /**
+   * Query the config for the system.
+   */
+  getConfig(): Observable<Config> {
+    return this._http.get<Config>('/api/config');
   }
 
   // Data Services

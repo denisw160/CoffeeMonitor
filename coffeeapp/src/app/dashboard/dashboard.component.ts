@@ -1,5 +1,7 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {timer} from 'rxjs';
+import * as moment from 'moment';
+
 import {ApiService} from '../api.service';
 
 @Component({
@@ -35,14 +37,46 @@ export class DashboardComponent implements OnInit, OnDestroy {
    * Updates the status for the fill level, allocation from the sensor data.
    */
   updateFillAllocation() {
-    const currentData = this._api.getDataLatest();
-    currentData.subscribe(r => {
-      console.log('ID: ' + r.id);
-      console.log('TS: ' + r.timestamp);
-      console.log('Weight: ' + r.weight);
-      console.log('Allocated: ' + r.allocated);
-    });
+    const config = this._api.getConfig();
+    config.subscribe(c => {
+      // console.log('Max Weight: ' + c.maxWeight);
 
+      const data = this._api.getDataLatest();
+      data.subscribe(d => {
+        // console.log('ID: ' + d.id);
+        // console.log('TS: ' + d.timestamp);
+        // console.log('Weight: ' + d.weight);
+        // console.log('Allocated: ' + d.allocated);
+
+        // Update image for fill level
+        // TODO Check if an offset is required
+        const div = c.maxWeight / 6.0;
+        const step = Math.min(Math.floor(d.weight / div), 5);
+        document.getElementById('coffee-level').setAttribute('src', '../../assets/level-' + step + '.png');
+
+        // Update progressbar
+        const percentage = Math.round((d.weight * 100) / c.maxWeight);
+        const progressBar = document.getElementById('coffee-level-progress');
+        progressBar.setAttribute('aria-valuenow', String(percentage));
+        progressBar.style.width = percentage + '%';
+        progressBar.innerText = percentage + '%';
+
+        // Update allocation
+        if (d.allocated) {
+          document.getElementById('coffee-allocated').setAttribute('src', '../../assets/coffee-allocated.png');
+        } else {
+          document.getElementById('coffee-allocated').setAttribute('src', '../../assets/coffee-not-allocated.png');
+        }
+
+        // Set last updated
+        const timestamp = moment(d.timestamp);
+        // console.log(timestamp.locale());
+        // console.log(timestamp.format());
+        // console.log(timestamp.fromNow());
+        document.getElementById('coffee-level-updated').innerText = timestamp.fromNow();
+        document.getElementById('coffee-allocated-updated').innerText = timestamp.fromNow();
+      });
+    });
   }
 
   updateDashboard(t) {
