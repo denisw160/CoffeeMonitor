@@ -1,0 +1,37 @@
+/* *** Coffee Machine *** */
+
+/* iPhone */
+.img-coffee-machine {
+  position: relative;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  width: 150px;
+  height: 240px;
+}
+
+.img-coffee-status {
+  position: absolute;
+  left: 35%;
+  top: 0%;
+  width: 64px;
+  height: 64px;
+}
+
+/* for iPad or bigger */
+@media (min-width: 992px) {
+  .img-coffee-machine {
+    position: relative;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 313px;
+    height: 500px;
+  }
+
+  .img-coffee-status {
+    position: absolute;
+    left: 25%;
+    top: 5%;
+    width: 96px;
+    height: 96px;
+  }
+}
