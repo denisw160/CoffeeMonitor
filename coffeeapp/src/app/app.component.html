@@ -1,31 +1,32 @@
-<mat-toolbar color="primary">
-  <!-- Header -->
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <!-- Header-Icon & Application Title -->
   <img src="../assets/header-icon.png" alt="Header Icon" height="32" width="32"/>
-  <span style="margin-left: 15px">{{title}}</span>
+  <a class="navbar-brand mr-auto" style="margin-left: 15px" routerLink="/dashboard"
+     routerLinkActive="active">{{title}}</a>
 
-  <!-- This fills the remaining space of the current row -->
-  <span class="fill-remaining-space"></span>
+  <!-- Minimized NavBar on smaller devices -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-  <!-- Navigation for desktop resolution -->
-  <div fxShow="true" fxHide.lt-md="true">
-    <a mat-button routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-    <a mat-button routerLink="/history" routerLinkActive="active">History</a>
-    <a mat-button routerLink="/config" routerLinkActive="active">Config</a>
+  <!-- NavBar Links -->
+  <div id="navbarCollapse" class="collapse navbar-collapse">
+    <ul class="navbar-nav ml-auto ">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/history" routerLinkActive="active">History</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/config" routerLinkActive="active">Config</a>
+      </li>
+    </ul>
   </div>
+</nav>
 
-  <!-- Navigation for smaller resolutions  -->
-  <div fxShow="true" fxHide.gt-sm="true">
-    <mat-menu #appMenu="matMenu">
-      <a mat-button routerLink="/dashboard" routerLinkActive="active">Dashboard</a><br/>
-      <a mat-button routerLink="/history" routerLinkActive="active">History</a><br/>
-      <a mat-button routerLink="/config" routerLinkActive="active">Config</a>
-    </mat-menu>
-
-    <button mat-icon-button [matMenuTriggerFor]="appMenu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-  </div>
-</mat-toolbar>
-
-<!-- Routed components go here -->
-<router-outlet></router-outlet>
+<div class="container content">
+  <!-- Routed components go here -->
+  <router-outlet></router-outlet>
+</div>
