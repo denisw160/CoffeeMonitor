@@ -2,7 +2,6 @@ package me.wirries.coffeemonitor.coffeeservice;
 
 import me.wirries.coffeemonitor.coffeeservice.model.Config;
 import me.wirries.coffeemonitor.coffeeservice.model.SensorData;
-import me.wirries.coffeemonitor.coffeeservice.repo.SensorDataRepository;
 import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,9 @@ public abstract class CoffeeServiceRepositoryTests extends CoffeeServiceApplicat
     @Autowired
     private MongoTemplate template;
 
-    @Autowired
-    private SensorDataRepository repository;
+    public MongoTemplate getTemplate() {
+        return template;
+    }
 
     @Before
     public void setUp() {
@@ -43,14 +43,6 @@ public abstract class CoffeeServiceRepositoryTests extends CoffeeServiceApplicat
         config.setTimestamp(new Date(now.getTime()));
         config.setMaxWeight(100 * 1.1);
         template.save(config);
-    }
-
-    public MongoTemplate getTemplate() {
-        return template;
-    }
-
-    public SensorDataRepository getRepository() {
-        return repository;
     }
 
 }
