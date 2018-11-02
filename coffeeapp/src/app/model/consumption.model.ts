@@ -1,7 +1,7 @@
 /**
  * This class represents the coffee consumption for a day.
  */
-export class Consumption {
+export class ConsumptionModel {
 
   day: Date;
   consumption: number;

@@ -1,19 +1,25 @@
 <h3>Config</h3>
-<p>Lorem ipsum dolor sit amet, consectetuer adipiscing
-  elit. Aenean commodo ligula eget dolor. Aenean massa
-  <strong>strong</strong>. Cum sociis natoque penatibus
-  et magnis dis parturient montes, nascetur ridiculus
-  mus. Donec quam felis, ultricies nec, pellentesque
-  eu, pretium quis, sem. Nulla consequat massa quis
-  enim. Donec pede justo, fringilla vel, aliquet nec,
-  vulputate eget, arcu. In enim justo, rhoncus ut,
-  imperdiet a, venenatis vitae, justo. Nullam dictum
-  felis eu pede <a class="external ext" href="#">link</a>
-  mollis pretium. Integer tincidunt. Cras dapibus.
-  Vivamus elementum semper nisi. Aenean vulputate
-  eleifend tellus. Aenean leo ligula, porttitor eu,
-  consequat vitae, eleifend ac, enim. Aliquam lorem ante,
-  dapibus in, viverra quis, feugiat a, tellus. Phasellus
-  viverra nulla ut metus varius laoreet. Quisque rutrum.
-  Aenean imperdiet. Etiam ultricies nisi vel augue.
-  Curabitur ullamcorper ultricies nisi.</p>
+<p>On this page you can set the parameters of the application. To determine the filling level, the weights (max. weight,
+  empty weight) must be known.</p>
+
+<form (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="maxWeight">Max. Weight</label>
+    <input id="maxWeight" class="form-control" type="number" step="any"
+           [(ngModel)]="config.maxWeight" name="maxWeight"
+           aria-describedby="maxWeightHelp" placeholder="Enter the max. weight" required/>
+    <small id="maxWeightHelp" class="form-text text-muted">You can use any positive number.</small>
+  </div>
+
+  <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+<p>&nbsp;</p>
+
+<div id="alertSuccess" class="alert alert-success fade show" role="alert" *ngIf="showSuccess">
+  <i class="fas fa-check"></i> &nbsp; Saving successful - all values updated.
+</div>
+
+<div id="alertError" class="alert alert-danger fade show " role="alert" *ngIf="showError">
+  <i class="fas fa-times"></i> &nbsp; Error during saving - please contact the administrator.
+</div>

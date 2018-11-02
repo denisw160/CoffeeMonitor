@@ -1,18 +1,24 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import 'rxjs/add/operator/map';
 
-import {SensorData} from './sensordata';
-import {Alive} from './alive';
-import {Config} from './config';
-import {Consumption} from './consumption';
+import {SensordataModel} from './model/sensordata.model';
+import {AliveModel} from './model/alive.model';
+import {ConfigModel} from './model/config.model';
+import {ConsumptionModel} from './model/consumption.model';
 import {environment} from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
+
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
 
   private mockUpMode: boolean; // TODO Add mockUp json data
 
@@ -26,8 +32,8 @@ export class ApiService {
   /**
    * Query the service, if the sensor is alive.
    */
-  getAlive(): Observable<Alive> {
-    return this._http.get<Alive>('/api/alive');
+  getAlive(): Observable<AliveModel> {
+    return this._http.get<AliveModel>('/api/alive');
   }
 
   // Config Services
@@ -35,8 +41,16 @@ export class ApiService {
   /**
    * Query the config for the system.
    */
-  getConfig(): Observable<Config> {
-    return this._http.get<Config>('/api/config');
+  getConfig(): Observable<ConfigModel> {
+    return this._http.get<ConfigModel>('/api/config');
+  }
+
+  /**
+   * Saving the configuration on the server.
+   * @param config Configuration
+   */
+  putConfig(config: ConfigModel): Observable<any> {
+    return this._http.put('/api/config', JSON.stringify(config), this.httpOptions);
   }
 
   // Data Services
@@ -44,22 +58,22 @@ export class ApiService {
   /**
    * Get all data directly from the database.
    */
-  getData(): Observable<SensorData[]> {
-    return this._http.get<SensorData[]>('/api/data/7days');
+  getData(): Observable<SensordataModel[]> {
+    return this._http.get<SensordataModel[]>('/api/data/7days');
   }
 
   /**
    * Get the latest data entry from the database.
    */
-  getDataLatest(): Observable<SensorData> {
-    return this._http.get<SensorData>('/api/data/latest');
+  getDataLatest(): Observable<SensordataModel> {
+    return this._http.get<SensordataModel>('/api/data/latest');
   }
 
   /**
    * Get the latest consumption from today.
    */
-  getConsumptionLatest(): Observable<Consumption> {
-    return this._http.get<Consumption>('/api/consumption/latest');
+  getConsumptionLatest(): Observable<ConsumptionModel> {
+    return this._http.get<ConsumptionModel>('/api/consumption/latest');
   }
 
   // TODO Add service for configuration

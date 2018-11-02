@@ -1,7 +1,7 @@
 /**
  * This class represents the data of the sensor.
  */
-export class SensorData {
+export class SensordataModel {
 
   id: string;
   timestamp: Date;
