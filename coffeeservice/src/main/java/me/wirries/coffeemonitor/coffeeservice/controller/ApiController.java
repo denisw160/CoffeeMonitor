@@ -1,9 +1,6 @@
 package me.wirries.coffeemonitor.coffeeservice.controller;
 
-import me.wirries.coffeemonitor.coffeeservice.model.Alive;
-import me.wirries.coffeemonitor.coffeeservice.model.Config;
-import me.wirries.coffeemonitor.coffeeservice.model.Consumption;
-import me.wirries.coffeemonitor.coffeeservice.model.SensorData;
+import me.wirries.coffeemonitor.coffeeservice.model.*;
 import me.wirries.coffeemonitor.coffeeservice.repo.ConfigRepository;
 import me.wirries.coffeemonitor.coffeeservice.repo.SensorDataRepository;
 import org.bson.types.ObjectId;
@@ -184,13 +181,17 @@ public class ApiController {
      * @param config Config
      */
     @PutMapping("/config")
-    public void setConfig(@RequestBody Config config) {
-        LOGGER.info("Storing the configuration");
+    public GenericResponse<Config> setConfig(@RequestBody Config config) {
+        LOGGER.info("Storing the configuration {}", config);
         if (config != null) {
             config.setId(ObjectId.get().toString());
             config.setTimestamp(new Date());
             configRepository.save(config);
+
+            return new GenericResponse<>(200, "Save success", config);
         }
+
+        return new GenericResponse<>(500, "No configuration posted.");
     }
 
 }
