@@ -55,7 +55,8 @@ public class SensorMessageHandler implements MessageHandler {
                 // Create new object from payload
                 SensorData data = new SensorData();
                 data.setId(ObjectId.get().toString());
-                Date timestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").parse(obj.get("timestamp").asText());
+                String ts = StringUtils.substring(obj.get("timestamp").asText(), 0, 23);
+                Date timestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(ts);
                 data.setTimestamp(timestamp);
                 data.setAllocated(obj.get("allocated").asBoolean(false));
                 data.setWeight(obj.get("weight").asDouble(0.0));
