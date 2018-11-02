@@ -21,7 +21,7 @@ public abstract class CoffeeServiceRepositoryTests extends CoffeeServiceApplicat
     private SensorDataRepository repository;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         template.dropCollection(SensorData.class);
 
         Date now = new Date();
@@ -29,7 +29,7 @@ public abstract class CoffeeServiceRepositoryTests extends CoffeeServiceApplicat
             SensorData data = new SensorData();
             data.setId(ObjectId.get().toString());
             data.setAllocated(false);
-            data.setTimestamp(new Date(now.getTime() - i * 10));
+            data.setTimestamp(new Date(now.getTime() - (i * 1000) - 25000));
             data.setWeight(i * 1.1);
             template.save(data);
         }

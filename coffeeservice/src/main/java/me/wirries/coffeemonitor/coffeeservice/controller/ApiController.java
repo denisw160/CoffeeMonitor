@@ -56,7 +56,7 @@ public class ApiController {
         if (latest == null || latest.getTimestamp() == null) {
             alive.setAlive(false);
         } else {
-            Date aliveDate = new Date(System.currentTimeMillis() - (5000));
+            Date aliveDate = new Date(System.currentTimeMillis() - (30000));
             alive.setAlive(latest.getTimestamp().getTime() >= aliveDate.getTime());
         }
 
