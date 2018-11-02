@@ -9,3 +9,11 @@ GET http://localhost:8080/api/data/5bd9fe0afced1d94a8d9fd8c
 GET http://localhost:8080/api/data/latest
 
 ###
+
+GET http://localhost:8080/api/alive
+
+###
+
+GET http://localhost:8080/api/config
+
+###
