@@ -3,7 +3,6 @@ package me.wirries.coffeemonitor.coffeeservice.repo;
 import me.wirries.coffeemonitor.coffeeservice.model.SensorData;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -26,8 +25,8 @@ public interface SensorDataRepository extends MongoRepository<SensorData, String
      * @param timestamp Timestamp for query
      * @return List of data after the timestamp
      */
-    @Query("{ 'timestamp' : { $gt: ?0} }")
-    List<SensorData> findAfterTimestamp(@Param("timestamp") Date timestamp);
+    @Query(value = "{'timestamp': {$gt: ?0}}", sort = "{'timestamp': 1}")
+    List<SensorData> findAfterTimestamp(Date timestamp);
 
     // add more custom query with the repository syntax
 
