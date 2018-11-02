@@ -1,11 +1,13 @@
 package me.wirries.coffeemonitor.coffeeservice.controller;
 
 import me.wirries.coffeemonitor.coffeeservice.CoffeeServiceRepositoryTests;
+import me.wirries.coffeemonitor.coffeeservice.model.Alive;
 import me.wirries.coffeemonitor.coffeeservice.model.SensorData;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 
@@ -16,6 +18,25 @@ public class ApiControllerTest extends CoffeeServiceRepositoryTests {
 
     @Autowired
     private ApiController controller;
+
+    @Test
+    public void getAlive() throws Exception {
+        Alive alive = controller.getAlive();
+        assertNotNull(alive.getTimestamp());
+        assertTrue(alive.isAlive());
+
+        // old data
+        TimeUnit.SECONDS.sleep(5);
+        alive = controller.getAlive();
+        assertNotNull(alive.getTimestamp());
+        assertFalse(alive.isAlive());
+
+        // no data
+        getTemplate().dropCollection(SensorData.class);
+        alive = controller.getAlive();
+        assertNotNull(alive.getTimestamp());
+        assertFalse(alive.isAlive());
+    }
 
     @Test
     public void getData() {

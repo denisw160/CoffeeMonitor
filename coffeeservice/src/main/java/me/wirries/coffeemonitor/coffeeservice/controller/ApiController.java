@@ -1,5 +1,6 @@
 package me.wirries.coffeemonitor.coffeeservice.controller;
 
+import me.wirries.coffeemonitor.coffeeservice.model.Alive;
 import me.wirries.coffeemonitor.coffeeservice.model.SensorData;
 import me.wirries.coffeemonitor.coffeeservice.repo.SensorDataRepository;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,9 +42,32 @@ public class ApiController {
     }
 
     /**
+     * Return the status of the coffee sensors.
+     *
+     * @return Alive-Status
+     */
+    @GetMapping("/alive")
+    public Alive getAlive() {
+        LOGGER.info("Get the alive status ...");
+        Alive alive = new Alive();
+        alive.setTimestamp(new Date());
+
+        SensorData latest = getDataLatest();
+        if (latest == null || latest.getTimestamp() == null) {
+            alive.setAlive(false);
+        } else {
+            Date aliveDate = new Date(System.currentTimeMillis() - (5000));
+            alive.setAlive(latest.getTimestamp().getTime() >= aliveDate.getTime());
+        }
+
+        return alive;
+    }
+
+
+    /**
      * Return all sensor data from the coffee sensor.
      *
-     * @return List with all data.
+     * @return List with all data
      */
     @GetMapping("/data")
     public List<SensorData> getData() {
