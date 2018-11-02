@@ -1,23 +1,29 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor(private http: HttpClient) {
+  constructor(private _http: HttpClient) {
   }
 
   getData(): Observable<any> {
-    return this.http.get('/api/data');
+    return this._http.get('/api/data');
   }
 
   getDataLatest(): Observable<any> {
-    return this.http.get('/api/data/latest');
+    return this._http.get('/api/data/latest');
   }
 
   // TODO Add service for configuration
+
+  dailyForecast() { // TODO Remove after testing
+    return this._http.get('/assets/sampleweather.json')
+      .map(result => result);
+  }
 
 }
