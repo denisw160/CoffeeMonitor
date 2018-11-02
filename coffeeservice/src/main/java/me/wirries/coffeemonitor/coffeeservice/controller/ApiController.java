@@ -2,6 +2,7 @@ package me.wirries.coffeemonitor.coffeeservice.controller;
 
 import me.wirries.coffeemonitor.coffeeservice.model.Alive;
 import me.wirries.coffeemonitor.coffeeservice.model.Config;
+import me.wirries.coffeemonitor.coffeeservice.model.Consumption;
 import me.wirries.coffeemonitor.coffeeservice.model.SensorData;
 import me.wirries.coffeemonitor.coffeeservice.repo.ConfigRepository;
 import me.wirries.coffeemonitor.coffeeservice.repo.SensorDataRepository;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static java.util.Calendar.DATE;
+import static org.apache.commons.lang3.time.DateUtils.*;
 
 /**
  * This is the REST controller for the api of the coffee service.
@@ -101,7 +105,66 @@ public class ApiController {
         return dataRepository.findById(id).orElse(null);
     }
 
-    // TODO Adding REST Services for the consumption
+    /**
+     * Return all consumption data from the coffee sensor.
+     *
+     * @return List with all data
+     */
+    @GetMapping("/consumption")
+    public List<Consumption> getConsumption() {
+        LOGGER.info("Collecting all consumption data ...");
+        return aggregate(getData());
+    }
+
+    /**
+     * Get latest consumption data (from today).
+     *
+     * @return Consumption
+     */
+    @GetMapping("/consumption/latest")
+    public Consumption getConsumptionLatest() {
+        LOGGER.info("Get latest consumption data");
+        Date timestamp = addDays(truncate(new Date(), DATE), 0);
+        List<Consumption> data = aggregate(dataRepository.findAfterTimestamp(timestamp));
+        return (data.isEmpty()) ? new Consumption() : data.get(0);
+    }
+
+    /**
+     * Get latest consumption data for the last 7 days.
+     *
+     * @return Consumption
+     */
+    @GetMapping("/consumption/7days")
+    public List<Consumption> getConsumption7Days() {
+        LOGGER.info("Get consumption data for the last 7 days");
+        Date timestamp = addDays(truncate(new Date(), DATE), -6);
+        return aggregate(dataRepository.findAfterTimestamp(timestamp));
+    }
+
+    /**
+     * Creates one consumption object per day.
+     *
+     * @param data List of sensor data / ordered by timestamp
+     * @return List of consumption
+     */
+    private List<Consumption> aggregate(List<SensorData> data) {
+        List<Consumption> list = new ArrayList<>();
+
+        boolean state = false;
+        Consumption c = null;
+        for (SensorData s : data) {
+            if (c == null || !isSameDay(c.getDay(), s.getTimestamp())) {
+                c = new Consumption(truncate(s.getTimestamp(), DATE));
+                list.add(c);
+            }
+            if (state && !s.getAllocated()) {
+                c.incrementConsumption();
+            }
+            state = s.getAllocated();
+        }
+
+        return list;
+    }
 
     /**
      * Get latest configuration.

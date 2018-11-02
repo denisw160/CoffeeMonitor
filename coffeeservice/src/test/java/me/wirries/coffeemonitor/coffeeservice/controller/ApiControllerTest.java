@@ -4,9 +4,12 @@ import me.wirries.coffeemonitor.coffeeservice.CoffeeServiceRepositoryTests;
 import me.wirries.coffeemonitor.coffeeservice.model.Alive;
 import me.wirries.coffeemonitor.coffeeservice.model.Config;
 import me.wirries.coffeemonitor.coffeeservice.model.SensorData;
+import org.bson.types.ObjectId;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -124,6 +127,38 @@ public class ApiControllerTest extends CoffeeServiceRepositoryTests {
         config = controller.getConfig();
         assertNotNull(config);
         assertEquals(5.0, config.getMaxWeight(), 0.0);
+    }
+
+    @Test
+    public void getConsumption() {
+        // TODO Test
+    }
+
+    @Test
+    public void getConsumptionLatest() {
+        // TODO Test
+    }
+
+    @Test
+    public void getConsumption7Days() {
+        // TODO Test
+    }
+
+    @Test
+    @Ignore
+    public void generateTestData() {
+        getTemplate().dropCollection(SensorData.class);
+
+        Date now = new Date();
+        for (int i = 1; i <= 500; i++) {
+            SensorData data = new SensorData();
+            data.setId(ObjectId.get().toString());
+            data.setAllocated(!(Math.random() < 0.5));
+            Date timestamp = new Date(now.getTime() - (i * 2880000));
+            data.setTimestamp(timestamp);
+            data.setWeight(i * 1.1);
+            getTemplate().save(data);
+        }
     }
 
 }

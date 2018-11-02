@@ -10,10 +10,30 @@ GET http://localhost:8080/api/data/latest
 
 ###
 
+GET http://localhost:8080/api/data/7days
+
+###
+
 GET http://localhost:8080/api/alive
 
 ###
 
 GET http://localhost:8080/api/config
+
+###
+
+GET http://localhost:8080/api/config
+
+###
+
+GET http://localhost:8080/api/consumption
+
+###
+
+GET http://localhost:8080/api/consumption/latest
+
+###
+
+GET http://localhost:8080/api/consumption/7days
 
 ###

@@ -25,4 +25,9 @@ public class SensorDataRepositoryTest extends CoffeeServiceRepositoryTests {
         assertNotNull(data.getId());
     }
 
+    @Test
+    public void findAfterTimestamp() {
+        // TODO Test
+    }
+
 }
