@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Chart} from 'chart.js';
+import * as Chart from 'chart.js';
 import * as moment from 'moment';
-
 import {ApiService} from '../api.service';
 
 @Component({
@@ -11,67 +10,88 @@ import {ApiService} from '../api.service';
 })
 export class HistoryComponent implements OnInit {
 
-  chart_level = []; // This will hold our chart info
+  levelChart: Chart;
   consumptionCanvas: Chart;
 
   constructor(private _api: ApiService) {
   }
 
   ngOnInit() {
-    // TODO Replace with real implementation
-    this._api.dailyForecast()
-      .subscribe(res => {
-        console.log('Query data');
-
-        let temp_max = res['list'].map(res => res.main.temp_max);
-        let temp_min = res['list'].map(res => res.main.temp_min);
-        let alldates = res['list'].map(res => res.dt);
-
-        let weatherDates = [];
-        alldates.forEach((res) => {
-          let jsdate = new Date(res * 1000);
-          weatherDates.push(jsdate.toLocaleTimeString('en', {year: 'numeric', month: 'short', day: 'numeric'}));
+    // Chart for level
+    this._api.getData()
+      .subscribe(data => {
+        // Query for data
+        // console.log('Receiving data for SensorData');
+        const ts = data.map(d => {
+          const timestamp = moment(d.timestamp);
+          return timestamp.format('LT');
         });
+        const allocated = data.map(d => {
+          if (d.allocated) {
+            return 1;
+          }
+          return 0;
+        });
+        const weights = data.map(d => d.weight);
 
-        this.chart_level = new Chart('canvas_level', {
+        // Building chart
+        this.levelChart = new Chart('levelCanvas', {
           type: 'line',
           data: {
-            labels: weatherDates,
+            labels: ts,
             datasets: [
               {
-                data: temp_max,
-                borderColor: '#3cba9f',
-                fill: false
+                data: weights,
+                label: 'Weight',
+                backgroundColor: '#E74C3C',
+                borderColor: '#E74C3C',
+                fill: false,
+                yAxisID: 'A'
               },
               {
-                data: temp_min,
-                borderColor: '#ffcc00',
-                fill: false
-              },
+                data: allocated,
+                label: 'Allocated',
+                backgroundColor: '#f0f0f0',
+                borderColor: '#cdcdcd',
+                fill: true,
+                yAxisID: 'B'
+              }
             ]
           },
           options: {
             legend: {
-              display: false
+              display: true,
+              position: 'bottom'
             },
             scales: {
               xAxes: [{
                 display: true
               }],
               yAxes: [{
-                display: true
-              }],
+                id: 'A',
+                type: 'linear',
+                position: 'left',
+              }, {
+                id: 'B',
+                type: 'linear',
+                position: 'right',
+                ticks: {
+                  max: 1,
+                  min: 0,
+                  stepSize: 1,
+                }
+              }]
             }
           }
         });
 
       });
 
-
+    // Chart for consumptions
     this._api.getConsumption()
       .subscribe(data => {
         // Query for data
-        console.log('Receiving data for consumptions');
+        // console.log('Receiving data for consumptions');
         const days = data.map(d => {
           const day = moment(d.day);
           return day.format('ll');
@@ -86,7 +106,7 @@ export class HistoryComponent implements OnInit {
             datasets: [{
               data: consumptions,
               label: 'Consumption',
-              backgroundColor: '#00A600'
+              backgroundColor: '#E74C3C'
             }]
           },
           options: {
@@ -103,9 +123,9 @@ export class HistoryComponent implements OnInit {
             }
           }
         });
-
       });
-
   }
+
+  // TODO Add AutoUpdate
 
 }

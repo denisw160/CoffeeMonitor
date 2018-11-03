@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import 'rxjs/add/operator/map';
-
 import {SensordataModel} from './model/sensordata.model';
 import {AliveModel} from './model/alive.model';
 import {ConfigModel} from './model/config.model';
@@ -105,11 +104,6 @@ export class ApiService {
     } else {
       return this._http.get<ConsumptionModel>('/api/consumption/latest');
     }
-  }
-
-  dailyForecast() { // TODO Remove after testing
-    return this._http.get('/assets/sampleweather.json')
-      .map(result => result);
   }
 
 }
