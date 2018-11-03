@@ -16,7 +16,10 @@ export class HistoryComponent implements OnInit {
   constructor(private _api: ApiService) {
   }
 
-  ngOnInit() {
+  /**
+   * Building the chart for the level data.
+   */
+  private buildLevelChart() {
     // Chart for level
     this._api.getData()
       .subscribe(data => {
@@ -84,9 +87,13 @@ export class HistoryComponent implements OnInit {
             }
           }
         });
-
       });
+  }
 
+  /**
+   * Building the chart for the consumption data.
+   */
+  private buildConsumptionChart() {
     // Chart for consumptions
     this._api.getConsumption()
       .subscribe(data => {
@@ -126,6 +133,13 @@ export class HistoryComponent implements OnInit {
       });
   }
 
-  // TODO Add AutoUpdate
+
+  ngOnInit() {
+    // Building charts on init
+    this.buildLevelChart();
+    this.buildConsumptionChart();
+  }
+
+// TODO Add AutoUpdate
 
 }
