@@ -1,7 +1,6 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {timer} from 'rxjs';
 import * as moment from 'moment';
-
 import {ApiService} from '../api.service';
 
 @Component({
