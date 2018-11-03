@@ -2,6 +2,8 @@ package me.wirries.coffeemonitor.coffeeservice.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.IndexDirection;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -19,6 +21,7 @@ public class SensorData {
     @Id
     private String id;
 
+    @Indexed(direction = IndexDirection.ASCENDING)
     private Date timestamp;
     private Double weight;
     private Boolean allocated;
