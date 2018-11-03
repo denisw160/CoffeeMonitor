@@ -3,6 +3,8 @@
 # This scripts installs necessary components
 #
 
+echo Setup components for CoffeeSensor ...
+
 sudo apt update
 sudo apt upgrade
 sudo apt autoremove
