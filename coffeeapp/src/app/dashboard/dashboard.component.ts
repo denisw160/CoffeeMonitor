@@ -74,6 +74,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         // console.log(timestamp.fromNow());
         document.getElementById('coffee-level-updated').innerText = timestamp.fromNow();
         document.getElementById('coffee-allocated-updated').innerText = timestamp.fromNow();
+        const weight = Math.round(d.weight * 100) / 100;
+        document.getElementById('coffee-weight').innerText = String(weight);
       });
     });
   }
