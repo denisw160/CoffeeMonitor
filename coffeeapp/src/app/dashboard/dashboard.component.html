@@ -8,25 +8,26 @@
   </div>
 
   <!-- Status of the coffee machine -->
-  <!-- TODO Center Card-Deck-->
-  <div class="col-md-8">
+  <div class="col-md-8 align-self-center">
     <div class="card-deck">
       <!-- coffee-level -->
       <div class="card">
         <img id="coffee-level" class="card-img-top img-dashboard-icon" src="../../assets/level-0.png" alt="Fill Level">
+
         <div class="card-body">
           <h5 class="card-title">Fill Level</h5>
           <p class="card-text">This indicator shows the current filling level of the coffee pot. The filling level is
             determined on the basis of the weight..</p>
+        </div>
+
+        <div class="card-footer bg-transparent border-0">
           <div class="progress">
             <div id="coffee-level-progress" class="progress-bar" role="progressbar"
                  style="width: 0; background-color:#e74c3c !important;" aria-valuenow="0"
                  aria-valuemin="0" aria-valuemax="100">0%
             </div>
           </div>
-          <p class="card-text">
-            <small id="coffee-level-updated" class="text-muted">Never updated</small>
-          </p>
+          <small id="coffee-level-updated" class="text-muted">Never updated</small>
         </div>
       </div>
 
@@ -34,27 +35,33 @@
       <div class="card">
         <img id="coffee-allocated" class="card-img-top img-dashboard-icon" src="../../assets/coffee-not-allocated.png"
              alt="Coffee Allocated">
+
         <div class="card-body">
           <h5 class="card-title">Pot Available</h5>
           <p class="card-text">This indicator shows whether the coffee pot is on the sensor. If the pot is not there,
             the icon is grey.</p>
-          <p class="card-text">
-            <small id="coffee-allocated-updated" class="text-muted">Never updated</small>
-          </p>
+        </div>
+
+        <div class="card-footer bg-transparent border-0">
+          <small id="coffee-allocated-updated" class="text-muted">Never updated</small>
         </div>
       </div>
 
       <!-- coffee-consumption -->
       <div class="card">
         <img class="card-img-top img-dashboard-icon" src="../../assets/coffee-consumption.png" alt="Daily Consumption">
+
         <div class="card-body">
           <h5 class="card-title">Consumption</h5>
           <p class="card-text">This indicator shows the daily consumption of coffee pots.</p>
-          <span id="coffee-consumption" class="badge badge-secondary"
-                style="background-color:#e74c3c !important;">0</span>
-          <p class="card-text">
-            <small id="coffee-consumption-updated" class="text-muted">Never updated</small>
-          </p>
+        </div>
+
+        <div class="card-footer bg-transparent border-0">
+          <div class="text-center">
+            <span id="coffee-consumption" class="badge badge-secondary"
+                  style="width: 100%; height: 16px; background-color:#e74c3c !important;">0</span>
+          </div>
+          <small id="coffee-consumption-updated" class="text-muted">Never updated</small>
         </div>
       </div>
     </div>
