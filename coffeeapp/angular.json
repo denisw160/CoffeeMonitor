@@ -70,8 +70,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "coffeeapp:build",
-            "port": 80
+            "browserTarget": "coffeeapp:build"
           },
           "configurations": {
             "mock": {
