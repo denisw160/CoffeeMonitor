@@ -281,6 +281,8 @@ public class ApiController {
     public GenericResponse<Config> setConfig(@RequestBody Config config) {
         LOGGER.info("Storing the configuration {}", config);
         if (config != null) {
+            configRepository.deleteAll();
+
             config.setId(ObjectId.get().toString());
             config.setTimestamp(new Date());
             configRepository.save(config);
