@@ -6,3 +6,6 @@
 echo Building CoffeeApp ...
 npm install
 ng build --configuration=production
+
+# beep when done
+echo -en "\007"
