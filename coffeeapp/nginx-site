@@ -6,9 +6,22 @@
 ##
 
 #
+# Expires for the resources
+#
+map $sent_http_content_type $expires {
+    default                    off;
+    text/html                  epoch; #means no cache, as it is not a static page
+    text/css                   max;
+    application/javascript     max;
+    ~image/                    30d;
+}
+
+#
 # Server configuration
 #
 server {
+	server_name _;
+
 	listen 80 default_server;
 	listen [::]:80 default_server;
 
@@ -29,14 +42,21 @@ server {
 	# include snippets/snakeoil.conf;
 
 	root ##APP_DIR##/dist/coffeeapp;
-
 	index index.html;
+	expires $expires;
 
-	server_name _;
-
+	# Root directory
 	location / {
 		# First attempt to serve request as file, then
 		# as directory, then fall back to displaying a 404.
-		try_files $uri $uri/ =404;
+		#try_files $uri $uri/ =404;
+
+		# Redirect to angular main page
+		try_files $uri $uri/ /index.html;
+	}
+
+	# Reverse proxy to CoffeeService API
+	location /api/ {
+		proxy_pass http://localhost:8080/api/;
 	}
 }
