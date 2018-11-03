@@ -143,7 +143,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
    * @param t Time-Tick (only for debug)
    */
   updateChart(t) {
-    console.log('Update data: ' + t + ' - ' + new Date());
+    // console.log('Update data: ' + t + ' - ' + new Date());
 
     this._api.getData()
       .subscribe(data => {
