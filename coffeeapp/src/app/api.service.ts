@@ -92,7 +92,7 @@ export class ApiService {
     if (this.mockUpMode) {
       return this._http.get<ConsumptionModel[]>('/assets/mock_api_consumption_7days.json');
     } else {
-      return this._http.get<ConsumptionModel[]>('/api/consumption/latest');
+      return this._http.get<ConsumptionModel[]>('/api/consumption/7days');
     }
   }
 
