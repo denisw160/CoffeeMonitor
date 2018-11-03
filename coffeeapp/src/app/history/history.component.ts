@@ -15,7 +15,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
   updateSubscription;
 
   levelChart: Chart;
-  consumptionCanvas: Chart;
+  consumptionChart: Chart;
 
   constructor(private _api: ApiService) {
   }
@@ -110,7 +110,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
         const consumptions = data.map(d => d.consumption);
 
         // Building chart
-        this.consumptionCanvas = new Chart('consumptionCanvas', {
+        this.consumptionChart = new Chart('consumptionCanvas', {
           type: 'bar',
           data: {
             labels: days,
@@ -145,7 +145,43 @@ export class HistoryComponent implements OnInit, OnDestroy {
   updateChart(t) {
     console.log('Update data: ' + t + ' - ' + new Date());
 
-    // TODO Add AutoUpdate
+    this._api.getData()
+      .subscribe(data => {
+        // Query for data
+        // console.log('Receiving data for SensorData');
+        const ts = data.map(d => {
+          const timestamp = moment(d.timestamp);
+          return timestamp.format('LT');
+        });
+        const allocated = data.map(d => {
+          if (d.allocated) {
+            return 1;
+          }
+          return 0;
+        });
+        const weights = data.map(d => d.weight);
+
+        this.levelChart.data.labels = ts;
+        this.levelChart.data.datasets[0].data = weights;
+        this.levelChart.data.datasets[1].data = allocated;
+
+        this.levelChart.update();
+      });
+
+    this._api.getConsumption()
+      .subscribe(data => {
+        // Query for data
+        // console.log('Receiving data for consumptions');
+        const days = data.map(d => {
+          const day = moment(d.day);
+          return day.format('ll');
+        });
+        const consumptions = data.map(d => d.consumption);
+
+        this.consumptionChart.data.labels = days;
+        this.consumptionChart.data.datasets[0].data = consumptions;
+        this.consumptionChart.update();
+      });
   }
 
 
