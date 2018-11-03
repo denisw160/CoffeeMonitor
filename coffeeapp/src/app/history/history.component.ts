@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Chart} from 'chart.js';
+import * as moment from 'moment';
 
 import {ApiService} from '../api.service';
 
@@ -11,7 +12,7 @@ import {ApiService} from '../api.service';
 export class HistoryComponent implements OnInit {
 
   chart_level = []; // This will hold our chart info
-  chart_consumption = []; // This will hold our chart info
+  consumptionCanvas: Chart;
 
   constructor(private _api: ApiService) {
   }
@@ -64,22 +65,29 @@ export class HistoryComponent implements OnInit {
           }
         });
 
-        this.chart_consumption = new Chart('canvas_consumption', {
-          type: 'line',
+      });
+
+
+    this._api.getConsumption()
+      .subscribe(data => {
+        // Query for data
+        console.log('Receiving data for consumptions');
+        const days = data.map(d => {
+          const day = moment(d.day);
+          return day.format('ll');
+        });
+        const consumptions = data.map(d => d.consumption);
+
+        // Building chart
+        this.consumptionCanvas = new Chart('consumptionCanvas', {
+          type: 'bar',
           data: {
-            labels: weatherDates,
-            datasets: [
-              {
-                data: temp_max,
-                borderColor: '#3cba9f',
-                fill: false
-              },
-              {
-                data: temp_min,
-                borderColor: '#ffcc00',
-                fill: false
-              },
-            ]
+            labels: days,
+            datasets: [{
+              data: consumptions,
+              label: 'Consumption',
+              backgroundColor: '#00A600'
+            }]
           },
           options: {
             legend: {
@@ -97,6 +105,7 @@ export class HistoryComponent implements OnInit {
         });
 
       });
+
   }
 
 }
