@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {timer} from 'rxjs';
 import * as Chart from 'chart.js';
 import * as moment from 'moment';
 import {ApiService} from '../api.service';
@@ -8,7 +9,10 @@ import {ApiService} from '../api.service';
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.css']
 })
-export class HistoryComponent implements OnInit {
+export class HistoryComponent implements OnInit, OnDestroy {
+
+  updateTimer = timer(15000, 30000);
+  updateSubscription;
 
   levelChart: Chart;
   consumptionCanvas: Chart;
@@ -133,13 +137,29 @@ export class HistoryComponent implements OnInit {
       });
   }
 
+  /**
+   * Update data for chart.
+   *
+   * @param t Time-Tick (only for debug)
+   */
+  updateChart(t) {
+    console.log('Update data: ' + t + ' - ' + new Date());
+
+    // TODO Add AutoUpdate
+  }
+
 
   ngOnInit() {
     // Building charts on init
     this.buildLevelChart();
     this.buildConsumptionChart();
+
+    // Register the timer for update the chart data
+    this.updateSubscription = this.updateTimer.subscribe(t => this.updateChart(t));
   }
 
-// TODO Add AutoUpdate
+  ngOnDestroy() {
+    this.updateSubscription.unsubscribe();
+  }
 
 }
