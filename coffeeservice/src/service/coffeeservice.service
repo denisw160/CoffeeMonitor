@@ -9,7 +9,7 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=pi
+User=##PROCESS_USR##
 ExecStart=##APP_DIR##/start.sh
 WorkingDirectory=##APP_DIR##
 Restart=on-failure
