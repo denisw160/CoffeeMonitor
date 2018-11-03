@@ -30,7 +30,7 @@ server {
 
 	root ##APP_DIR##/dist/coffeeapp;
 
-	index.html;
+	index index.html;
 
 	server_name _;
 
