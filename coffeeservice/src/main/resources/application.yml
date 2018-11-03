@@ -4,7 +4,7 @@ spring:
   data:
     mongodb:
       host: localhost
-      database: coffeesensor
+      database: coffeeservice
       port: 27017
 
 # Logging - alternative you can use logback with log rotation
