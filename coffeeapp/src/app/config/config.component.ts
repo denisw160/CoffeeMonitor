@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ConfigModel} from '../model/config.model';
 import {ApiService} from '../api.service';
+import {ConfigModel} from '../model/config.model';
 
 @Component({
   selector: 'app-config',
