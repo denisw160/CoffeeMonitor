@@ -8,8 +8,11 @@ spring:
       port: 27017
 
 # Logging - alternative you can use logback with log rotation
+logging.file: coffeeservice.log
 logging:
-  file: coffeeservice.log
+  file:
+    max-size: 1MB
+    max-history: 10
   level:
     root: WARN
     org:
