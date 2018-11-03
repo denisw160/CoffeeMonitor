@@ -43,5 +43,23 @@ To get more help on the Angular CLI use `ng help` or go check out the
 [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 ### Scripts
+To install the required components, simply run the setup script. The installation requires SUDO rights.
 
-TODO Describe the scripts in this project
+    bash>setup.sh
+
+To install the service, simply run the install script. The installation requires SUDO rights.
+
+    bash>install.sh
+
+To uninstall the service, simply run the uninstall script. The installation requires SUDO rights.
+
+    bash>uninstall.sh
+
+The run script can be used to build and start the server on the local console (for development).
+
+    bash>run.sh
+
+For clean and building the service the following scripts can be used.
+
+    bash>clean.sh
+    bash>build.sh
