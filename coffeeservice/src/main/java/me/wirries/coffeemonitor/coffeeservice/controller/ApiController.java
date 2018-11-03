@@ -9,9 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.OptionalDouble;
 
 import static java.util.Calendar.*;
+import static me.wirries.coffeemonitor.coffeeservice.utils.DateUtils.isSameHour;
+import static me.wirries.coffeemonitor.coffeeservice.utils.DateUtils.isSameMinute;
 import static org.apache.commons.lang3.time.DateUtils.*;
 
 /**
@@ -50,7 +55,7 @@ public class ApiController {
      */
     @GetMapping("/alive")
     public Alive getAlive() {
-        LOGGER.info("Get the alive status ...");
+        LOGGER.debug("Get the alive status ...");
         Alive alive = new Alive();
         alive.setTimestamp(new Date());
 
@@ -72,8 +77,8 @@ public class ApiController {
      */
     @GetMapping("/data")
     public List<SensorData> getData() {
-        LOGGER.info("Get all coffee sensor data ...");
-        return new ArrayList<>(dataRepository.findAll());
+        LOGGER.debug("Get all coffee sensor data ...");
+        return dataRepository.findAll();
     }
 
     /**
@@ -83,7 +88,7 @@ public class ApiController {
      */
     @GetMapping("/data/latest")
     public SensorData getDataLatest() {
-        LOGGER.info("Get latest coffee sensor data");
+        LOGGER.debug("Get latest coffee sensor data");
         SensorData data = dataRepository.findTopByOrderByTimestampDesc();
         return (data != null) ? data : new SensorData();
     }
@@ -96,7 +101,7 @@ public class ApiController {
      */
     @GetMapping("/data/7days")
     public List<SensorData> getData7Days() {
-        LOGGER.info("Get sensor data for the last 7 days");
+        LOGGER.debug("Get sensor data for the last 7 days");
         Date timestamp = addDays(truncate(new Date(), DATE), -6);
         return aggregateSensorData(dataRepository.findAfterTimestamp(timestamp));
     }
@@ -104,7 +109,6 @@ public class ApiController {
     // optimize and cleanup code - reduce code duplication
     private List<SensorData> aggregateSensorData(List<SensorData> data) {
         List<SensorData> list = new ArrayList<>();
-
         Date now = new Date();
 
         SensorData n = null;
@@ -195,7 +199,7 @@ public class ApiController {
      */
     @GetMapping("/data/{id}")
     public SensorData getDataById(@PathVariable("id") String id) {
-        LOGGER.info("Get coffee sensor data for {}", id);
+        LOGGER.debug("Get coffee sensor data for {}", id);
         return dataRepository.findById(id).orElse(null);
     }
 
@@ -206,7 +210,7 @@ public class ApiController {
      */
     @GetMapping("/consumption")
     public List<Consumption> getConsumption() {
-        LOGGER.info("Collecting all consumption data ...");
+        LOGGER.debug("Collecting all consumption data ...");
         return aggregateConsumption(getData());
     }
 
@@ -217,7 +221,7 @@ public class ApiController {
      */
     @GetMapping("/consumption/latest")
     public Consumption getConsumptionLatest() {
-        LOGGER.info("Get latest consumption data");
+        LOGGER.debug("Get latest consumption data");
         Date timestamp = addDays(truncate(new Date(), DATE), 0);
         List<Consumption> data = aggregateConsumption(dataRepository.findAfterTimestamp(timestamp));
         return (data.isEmpty()) ? new Consumption() : data.get(0);
@@ -230,7 +234,7 @@ public class ApiController {
      */
     @GetMapping("/consumption/7days")
     public List<Consumption> getConsumption7Days() {
-        LOGGER.info("Get consumption data for the last 7 days");
+        LOGGER.debug("Get consumption data for the last 7 days");
         Date timestamp = addDays(truncate(new Date(), DATE), -6);
         return aggregateConsumption(dataRepository.findAfterTimestamp(timestamp));
     }
@@ -267,7 +271,7 @@ public class ApiController {
      */
     @GetMapping("/config")
     public Config getConfig() {
-        LOGGER.info("Get latest configuration");
+        LOGGER.debug("Get latest configuration");
         Config config = configRepository.findTopByOrderByTimestampDesc();
         return (config != null) ? config : new Config(2.8);
     }
@@ -279,7 +283,7 @@ public class ApiController {
      */
     @PutMapping("/config")
     public GenericResponse<Config> setConfig(@RequestBody Config config) {
-        LOGGER.info("Storing the configuration {}", config);
+        LOGGER.debug("Storing the configuration {}", config);
         if (config != null) {
             configRepository.deleteAll();
 
@@ -291,61 +295,6 @@ public class ApiController {
         }
 
         return new GenericResponse<>(500, "No configuration posted.");
-    }
-
-    /**
-     * Is the same hour?
-     */
-    private static boolean isSameHour(final Date date1, final Date date2) {
-        if (date1 == null || date2 == null) {
-            throw new IllegalArgumentException("The date must not be null");
-        }
-        final Calendar cal1 = Calendar.getInstance();
-        cal1.setTime(date1);
-        final Calendar cal2 = Calendar.getInstance();
-        cal2.setTime(date2);
-        return isSameHour(cal1, cal2);
-    }
-
-    /**
-     * Is the same hour?
-     */
-    private static boolean isSameHour(final Calendar cal1, final Calendar cal2) {
-        if (cal1 == null || cal2 == null) {
-            throw new IllegalArgumentException("The date must not be null");
-        }
-        return cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA) &&
-                cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) &&
-                cal1.get(Calendar.HOUR) == cal2.get(Calendar.HOUR);
-    }
-
-    /**
-     * Is the same minute?
-     */
-    private static boolean isSameMinute(final Date date1, final Date date2) {
-        if (date1 == null || date2 == null) {
-            throw new IllegalArgumentException("The date must not be null");
-        }
-        final Calendar cal1 = Calendar.getInstance();
-        cal1.setTime(date1);
-        final Calendar cal2 = Calendar.getInstance();
-        cal2.setTime(date2);
-        return isSameMinute(cal1, cal2);
-    }
-
-    /**
-     * Is the same minute?
-     */
-    private static boolean isSameMinute(final Calendar cal1, final Calendar cal2) {
-        if (cal1 == null || cal2 == null) {
-            throw new IllegalArgumentException("The date must not be null");
-        }
-        return cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA) &&
-                cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) &&
-                cal1.get(Calendar.HOUR) == cal2.get(Calendar.HOUR) &&
-                cal1.get(Calendar.MINUTE) == cal2.get(Calendar.MINUTE);
     }
 
 }

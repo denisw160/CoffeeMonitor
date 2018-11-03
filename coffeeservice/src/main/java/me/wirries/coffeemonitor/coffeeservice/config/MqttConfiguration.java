@@ -2,6 +2,8 @@ package me.wirries.coffeemonitor.coffeeservice.config;
 
 import me.wirries.coffeemonitor.coffeeservice.handler.SensorMessageHandler;
 import me.wirries.coffeemonitor.coffeeservice.repo.SensorDataRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +25,12 @@ import org.springframework.messaging.MessageHandler;
 @Configuration
 public class MqttConfiguration {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MqttConfiguration.class);
+
+    private static final String MQTT_URL = "tcp://localhost:1883";
+    private static final String MQTT_TOPIC = "me/wirries/coffeesensor";
+    private static final String CLIENT_ID = "coffeeservice";
+
     /**
      * The import channel for mqtt.
      *
@@ -40,11 +48,11 @@ public class MqttConfiguration {
      */
     @Bean
     public MessageProducer coffeeSensorProducer() {
+        LOGGER.info("Registering MQTT message producer for queue {} on server {} with client id {}",
+                MQTT_TOPIC, MQTT_URL, CLIENT_ID);
+
         MqttPahoMessageDrivenChannelAdapter adapter =
-                new MqttPahoMessageDrivenChannelAdapter(
-                        "tcp://localhost:1883",
-                        "coffeeservice",
-                        "me/wirries/coffeesensor");
+                new MqttPahoMessageDrivenChannelAdapter(MQTT_URL, CLIENT_ID, MQTT_TOPIC);
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());
         adapter.setQos(2);
