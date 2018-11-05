@@ -51,11 +51,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
         // Update image for fill level
         // Reduce the weight of the coffee pot - values only for the coffee
         const div = c.maxWeight / 6.0;
-        const step = Math.min(Math.floor((d.weight - c.potWeight) / div), 5);
+        const step = Math.min(Math.floor(Math.max(d.weight - c.potWeight, 0) / div), 5);
         document.getElementById('coffee-level').setAttribute('src', '../../assets/level-' + step + '.png');
 
         // Update progressbar
-        const percentage = Math.round(((d.weight - c.potWeight) * 100) / c.maxWeight);
+        const percentage = Math.round((Math.max(d.weight - c.potWeight, 0) * 100) / c.maxWeight);
         const progressBar = document.getElementById('coffee-level-progress');
         progressBar.setAttribute('aria-valuenow', String(percentage));
         progressBar.style.width = percentage + '%';
@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         // console.log(timestamp.fromNow());
         document.getElementById('coffee-level-updated').innerText = timestamp.fromNow();
         document.getElementById('coffee-allocated-updated').innerText = timestamp.fromNow();
-        const weight = Math.round((d.weight - c.potWeight) * 100) / 100;
+        const weight = Math.round(Math.max(d.weight - c.potWeight, 0) * 100) / 100;
         document.getElementById('coffee-weight').innerText = String(weight);
       });
     });

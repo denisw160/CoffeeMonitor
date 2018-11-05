@@ -7,12 +7,12 @@
     <label for="maxWeight">Max. Weight</label>
     <input id="maxWeight" class="form-control" type="number" step="any"
            [(ngModel)]="config.maxWeight" name="maxWeight"
-           aria-describedby="maxWeightHelp" placeholder="Enter the max. weight" required/>
+           aria-describedby="maxWeightHelp" placeholder="Enter the max. weight of the coffee without the pot" required/>
     <small id="maxWeightHelp" class="form-text text-muted">You can use any positive number.</small>
   </div>
 
   <div class="form-group">
-    <label for="potWeight">Max. Weight</label>
+    <label for="potWeight">Pot Weight</label>
     <input id="potWeight" class="form-control" type="number" step="any"
            [(ngModel)]="config.potWeight" name="potWeight"
            aria-describedby="potWeightHelp" placeholder="Enter the weight of the coffee pot" required/>
