@@ -1,16 +1,28 @@
 import datetime
 import json
-import random
+import signal
 import time
 
-import paho.mqtt.client as mqtt
+import RPi.GPIO as GPIO
+import paho.mqtt.client as MQTT
+
+from hx711 import HX711
 
 #
-# This scripts starts a dummy service, that sends random sensor values to the backend.
+# This scripts starts the service. The service reads the values (weight, allocated) from the hardware.
+# The values are send backend via mqtt.
 # For transmission a mqtt broker is used. The format of the data is json:
 # {"timestamp":"2012-04-23T18:25:43.511Z", "weight":[double], "allocated":[boolean]}
 #
 # The mqtt topic "me/wirries/coffeesensor" is used.
+#
+# The circuit diagram can be found in the folder documentation.
+#
+#
+# require modules
+#  - paho-mqtt (pip)
+#  - python-dev + python-rpi.gpio (apt)
+#    or for development fakeRPiGPIO (pip)
 #
 
 # Defaults
@@ -19,40 +31,94 @@ MQTT_HOST = "localhost"
 MQTT_PORT = 1883
 MQTT_KEEPALIVE_INTERVAL = 45
 MQTT_TOPIC = "me/wirries/coffeesensor"
-INTERVAL = 15
+INTERVAL = 1
+
+# Using GPIO numbers
+ALLOCATED_SENSOR = 5  # GPIO 05 / PIN 29
+WEIGHT_SENSOR_DT = 24  # GPIO 24 / PIN 18
+WEIGHT_SENSOR_SCK = 23  # GPIO 23 / PIN 16
+
+
+# Classes
+
+class GracefulKiller:
+    kill_now = False
+
+    def __init__(self):
+        signal.signal(signal.SIGINT, self.exit_gracefully)
+        signal.signal(signal.SIGTERM, self.exit_gracefully)
+
+    def exit_gracefully(self, signum, frame):
+        self.kill_now = True
 
 
 # Functions
 
 # Define on_publish event function
 def on_publish(client, userdata, mid):
-    print "Message Published..."
+    print "Message published"
 
 
 # Starting server
-print "CoffeeSensor (dummy) started - for stopping please press CRTL-c"
+print "CoffeeSensor started - for stopping please press CRTL-c"
 print " - MQTT-Broker:", MQTT_HOST
 print " - MQTT-Port:", MQTT_PORT
 print " - MQTT-Keepalive:", MQTT_KEEPALIVE_INTERVAL
 print " - MQTT-Topic:", MQTT_TOPIC
 
 # Initiate MQTT Client
-mqttc = mqtt.Client()
+mqttc = MQTT.Client()
 # Register publish callback function
 mqttc.on_publish = on_publish
 # Connect with MQTT Broker
 mqttc.connect(MQTT_HOST, MQTT_PORT, MQTT_KEEPALIVE_INTERVAL)
 
+# Setup GPIO layout
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(ALLOCATED_SENSOR, GPIO.IN)  # as input
+
+# Setup weight sensor
+hx = HX711(WEIGHT_SENSOR_DT, WEIGHT_SENSOR_SCK)
+hx.set_reading_format("LSB", "MSB")
+
+# Reference value for the weight sensor.
+hx.set_reference_unit(-392)
+# How to find this value
+# First you need a comparison object whose weight you know. E.g. a water bottle can be used well.
+# The weight should have an average value of the maximum of the load cell.
+# First you have to comment out the line with the reference value. Then start the program and follow
+# the outputs. Place the object. The displayed values can be positive or negative.
+# In this example, values around -402000 were displayed at 1kg (=1000g).
+# So this reference value is: -402000 / 1000 = -402.
+
+hx.reset()
+hx.tare()
+print "Weight sensor ready"
+
 # Running server
 try:
-    while True:
-        timestamp = str(datetime.datetime.now().isoformat())
-        weight = random.uniform(0.3, 2.8)
-        allocated = random.choice([True, False])
+    killer = GracefulKiller()
 
-        msg = json.dumps({"timestamp": timestamp, "weight": weight, "allocated": allocated})
+    while True:
+        # Reading values from sensors
+        allocated = GPIO.input(ALLOCATED_SENSOR)
+        weight = hx.get_weight(5)
+        hx.power_down()
+        hx.power_up()
+
+        # Output for debugging
+        print "Allocated is ", allocated  # High is free
+        print "Weight is ", weight
+
+        timestamp = str(datetime.datetime.now().isoformat())
+        msg = json.dumps({"timestamp": timestamp, "weight": weight, "allocated": allocated == 0})
+        print "MQTT message: ", msg
+
         # Publish message to MQTT Broker
         mqttc.publish(MQTT_TOPIC, msg)
+
+        if killer.kill_now:
+            break
 
         # wait for next update
         time.sleep(INTERVAL)
@@ -62,172 +128,7 @@ except KeyboardInterrupt:
 
 finally:
     print "CoffeeSensor stopped"
+    # Release GPIO ports
+    GPIO.cleanup()
     # Disconnect from MQTT_Broker
     mqttc.disconnect()
-
-
-
-
-
-
-# from PyCRC.CRCCCITT import CRCCCITT
-# import RPi.GPIO as GPIO
-# import time
-# import signal
-# import socket
-# import sys
-#
-# #
-# # This scripts starts the server and reads the status of the GPIO-port
-# # from the reflex light barrier.  The status is continuously transmitting
-# # to the receiver.
-# #
-# # For configuration the script reads the parameter from the command line.
-# # Order of parameters
-# #  1. SERVER = name or IP address
-# #  2. PORT = port
-# #  3. STATION = name of the station, in syntax TCSxxxxx
-# #  4. DEBUG = DEBUG or nothing to enable debug mode
-# #
-# # Structure of the telegram
-# # index     bytes       type    name
-# # 0         8           string  TCSASxxx
-# # 8         1           bit     allocation state, 0 = open, 1 = occupied
-# # 9         n           short   CRC16-CCINT for bytes 0 - 9
-# #
-# # require modules
-# #  - PyCRC (pip)
-# #  - python-dev + python-rpi.gpio (apt)
-# #    or for development fakeRPiGPIO (pip)
-# #
-#
-# # Default settings
-# UDP_IP = "127.0.0.1"
-# UDP_PORT = 1111
-# STATION = "TCSAS000"
-# DEBUG = False
-# INTERVAL = 0.1
-#
-# ALLOCATED_SENSOR = 7  # GPIO 04
-# STATUS_LED = 11  # GPIO 17
-# ALLOCATED_LED = 13  # GPIO 27
-#
-#
-# # Classes
-#
-# class GracefulKiller:
-#     kill_now = False
-#
-#     def __init__(self):
-#         signal.signal(signal.SIGINT, self.exit_gracefully)
-#         signal.signal(signal.SIGTERM, self.exit_gracefully)
-#
-#     def exit_gracefully(self, signum, frame):
-#         self.kill_now = True
-#
-#
-# # Functions
-#
-# def int2bytes(n):
-#     b = bytearray([0, 0])  # init
-#     b[1] = n & 0xFF
-#     n >>= 8
-#     b[0] = n & 0xFF
-#
-#     # Return the result as byte array
-#     return b
-#
-#
-# def getsensordata():
-#     # Reading High/Low from sensor
-#     # Example: http://raspberry.io/projects/view/reading-and-writing-from-gpio-ports-from-python/
-#     #          https://tutorials-raspberrypi.de/raspberry-pi-gpio-erklaerung-beginner-programmierung-lernen/
-#     r = GPIO.input(ALLOCATED_SENSOR)
-#     if r == 0:
-#         return True
-#     else:
-#         return False
-#
-#
-# # Reading parameter from command line
-# if len(sys.argv) < 4:
-#     print("Missing parameter, please use at least SERVER, PORT, STATION")
-#     exit(1)
-#
-# UDP_IP = sys.argv[1]
-# UDP_PORT = int(sys.argv[2])
-# STATION = sys.argv[3]
-#
-# print("AllocationSensor started - for stopping please press CRTL-c")
-# print(" - station:", STATION)
-# print(" - UDP target IP:", UDP_IP)
-# print(" - UDP target port:", UDP_PORT)
-#
-# # Debug output
-# if len(sys.argv) > 4:
-#     DEBUG = True
-#
-# if DEBUG:
-#     print("Number of arguments:", len(sys.argv), "arguments.")
-#     print("Argument List:", str(sys.argv))
-#
-# # Setup GPIO layout
-# GPIO.setmode(GPIO.BOARD)
-# GPIO.setup(STATUS_LED, GPIO.OUT)  # Pin 11 (GPIO 17) as output
-# GPIO.setup(ALLOCATED_LED, GPIO.OUT)  # Pin 13 (GPIO 27) as output
-# GPIO.setup(ALLOCATED_SENSOR, GPIO.IN)  # Pin 07 (GPIO 04) as input
-#
-# # Activate on booting
-# GPIO.output(STATUS_LED, GPIO.HIGH)
-# GPIO.output(ALLOCATED_LED, GPIO.HIGH)
-#
-# # Running server
-# HEARTBEAT = False
-# try:
-#     killer = GracefulKiller()
-#
-#     while True:
-#         # Toggle status led for heartbeat
-#         HEARTBEAT = not HEARTBEAT
-#         if HEARTBEAT:
-#             GPIO.output(STATUS_LED, GPIO.HIGH)
-#         else:
-#             GPIO.output(STATUS_LED, GPIO.LOW)
-#
-#         # Reading state from GPIO port
-#         ALLOCATED = getsensordata()
-#         ALLOCATED_AS_STRING = "\x00"
-#         if ALLOCATED:
-#             ALLOCATED_AS_STRING = "\x01"
-#             GPIO.output(ALLOCATED_LED, GPIO.HIGH)
-#         else:
-#             GPIO.output(ALLOCATED_LED, GPIO.LOW)
-#
-#         # Building message
-#         MESSAGE_AS_BYTES = str.encode(STATION) + str.encode(ALLOCATED_AS_STRING)
-#         CHECKSUM = CRCCCITT("FFFF").calculate(MESSAGE_AS_BYTES)
-#
-#         if DEBUG:
-#             print("message:", MESSAGE_AS_BYTES)
-#             print("checksum:", CHECKSUM)
-#             print("checksum (hex):", hex(CHECKSUM))
-#
-#         MESSAGE_AS_BYTES = MESSAGE_AS_BYTES + int2bytes(CHECKSUM)
-#
-#         # Sending message
-#         sock = socket.socket(socket.AF_INET,  # Internet
-#                              socket.SOCK_DGRAM)  # UDP
-#         sock.sendto(MESSAGE_AS_BYTES, (UDP_IP, UDP_PORT))
-#
-#         if killer.kill_now:
-#             break
-#
-#         # wait for next update
-#         time.sleep(INTERVAL)
-# except KeyboardInterrupt:
-#     if DEBUG:
-#         print("Strg-C called")
-# finally:
-#     print("AllocationSensor stopped")
-#     # Release GPIO ports
-#     GPIO.cleanup()
