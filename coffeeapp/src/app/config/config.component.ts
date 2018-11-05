@@ -21,7 +21,7 @@ export class ConfigComponent implements OnInit {
 
     const c = this._api.getConfig();
     c.subscribe(x => {
-      this.config.maxWeight = x.maxWeight;
+      this.config = x;
     });
   }
 

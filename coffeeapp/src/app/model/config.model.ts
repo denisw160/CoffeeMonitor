@@ -4,6 +4,7 @@
 export class ConfigModel {
 
   maxWeight: number;
+  potWeight: number;
 
   constructor() {
   }
