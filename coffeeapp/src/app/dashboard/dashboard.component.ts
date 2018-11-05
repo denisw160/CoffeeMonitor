@@ -39,6 +39,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const config = this._api.getConfig();
     config.subscribe(c => {
       // console.log('Max Weight: ' + c.maxWeight);
+      // console.log('Pot Weight: ' + c.potWeight);
 
       const data = this._api.getDataLatest();
       data.subscribe(d => {
@@ -48,13 +49,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
         // console.log('Allocated: ' + d.allocated);
 
         // Update image for fill level
-        // TODO Check if an offset is required
+        // Reduce the weight of the coffee pot - values only for the coffee
         const div = c.maxWeight / 6.0;
-        const step = Math.min(Math.floor(d.weight / div), 5);
+        const step = Math.min(Math.floor((d.weight - c.potWeight) / div), 5);
         document.getElementById('coffee-level').setAttribute('src', '../../assets/level-' + step + '.png');
 
         // Update progressbar
-        const percentage = Math.round((d.weight * 100) / c.maxWeight);
+        const percentage = Math.round(((d.weight - c.potWeight) * 100) / c.maxWeight);
         const progressBar = document.getElementById('coffee-level-progress');
         progressBar.setAttribute('aria-valuenow', String(percentage));
         progressBar.style.width = percentage + '%';
@@ -74,7 +75,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         // console.log(timestamp.fromNow());
         document.getElementById('coffee-level-updated').innerText = timestamp.fromNow();
         document.getElementById('coffee-allocated-updated').innerText = timestamp.fromNow();
-        const weight = Math.round(d.weight * 100) / 100;
+        const weight = Math.round((d.weight - c.potWeight) * 100) / 100;
         document.getElementById('coffee-weight').innerText = String(weight);
       });
     });
