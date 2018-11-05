@@ -56,8 +56,8 @@ export class ApiService {
    * Saving the configuration on the server.
    * @param config Configuration
    */
-  putConfig(config: ConfigModel): Observable<any> {
-    return this._http.put('/api/config', JSON.stringify(config), this.httpOptions);
+  postConfig(config: ConfigModel): Observable<any> {
+    return this._http.post('/api/config', JSON.stringify(config), this.httpOptions);
   }
 
   // Data Services

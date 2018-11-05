@@ -31,7 +31,7 @@ export class ConfigComponent implements OnInit {
     this.showSuccess = false;
     this.showError = false;
 
-    const request = this._api.putConfig(this.config);
+    const request = this._api.postConfig(this.config);
     request.subscribe(data => {
         // console.log('Submit success: ' + data['statusCode']);
         this.showSuccess = true;
