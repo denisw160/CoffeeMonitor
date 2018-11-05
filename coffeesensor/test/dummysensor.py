@@ -12,6 +12,9 @@ import paho.mqtt.client as mqtt
 #
 # The mqtt topic "me/wirries/coffeesensor" is used.
 #
+# require modules
+#  - paho-mqtt (pip)
+#
 
 # Defaults
 
