@@ -31,7 +31,7 @@ MQTT_HOST = "localhost"
 MQTT_PORT = 1883
 MQTT_KEEPALIVE_INTERVAL = 45
 MQTT_TOPIC = "me/wirries/coffeesensor"
-INTERVAL = 1
+INTERVAL = 25
 
 # Using GPIO numbers
 ALLOCATED_SENSOR = 5  # GPIO 05 / PIN 29
