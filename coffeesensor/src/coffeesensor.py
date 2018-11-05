@@ -110,6 +110,9 @@ try:
         print "Allocated is ", allocated  # High is free
         print "Weight is ", weight
 
+        if weight < 0:
+            weight = 0  # ignore negative values
+
         timestamp = str(datetime.datetime.now().isoformat())
         msg = json.dumps({"timestamp": timestamp, "weight": weight, "allocated": allocated == 0})
         print "MQTT message: ", msg
