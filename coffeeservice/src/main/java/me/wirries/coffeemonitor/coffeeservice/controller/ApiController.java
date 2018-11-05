@@ -281,7 +281,7 @@ public class ApiController {
      *
      * @param config Config
      */
-    @PutMapping("/config")
+    @PostMapping("/config")
     public GenericResponse<Config> setConfig(@RequestBody Config config) {
         LOGGER.debug("Storing the configuration {}", config);
         if (config != null) {
