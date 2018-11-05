@@ -109,6 +109,7 @@ public class ApiControllerTest extends CoffeeServiceRepositoryTests {
 
         Config c = new Config();
         c.setMaxWeight(5.0);
+        c.setPotWeight(2.0);
         controller.setConfig(c);
 
         config = controller.getConfig();
@@ -124,6 +125,7 @@ public class ApiControllerTest extends CoffeeServiceRepositoryTests {
 
         c = new Config();
         c.setMaxWeight(5.0);
+        c.setPotWeight(2.0);
         controller.setConfig(c);
 
         config = controller.getConfig();

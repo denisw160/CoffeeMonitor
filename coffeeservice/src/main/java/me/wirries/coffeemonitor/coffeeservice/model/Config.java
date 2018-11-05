@@ -21,6 +21,7 @@ public class Config {
 
     private Date timestamp;
     private Double maxWeight;
+    private Double potWeight;
 
     public Config() {
         // default constructor
@@ -54,12 +55,21 @@ public class Config {
         this.maxWeight = maxWeight;
     }
 
+    public Double getPotWeight() {
+        return potWeight;
+    }
+
+    public void setPotWeight(Double potWeight) {
+        this.potWeight = potWeight;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("timestamp", timestamp)
                 .append("maxWeight", maxWeight)
+                .append("potWeight", potWeight)
                 .toString();
     }
 

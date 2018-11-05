@@ -42,6 +42,7 @@ public abstract class CoffeeServiceRepositoryTests extends CoffeeServiceApplicat
         config.setId(ObjectId.get().toString());
         config.setTimestamp(new Date(now.getTime()));
         config.setMaxWeight(100 * 1.1);
+        config.setPotWeight(50 * 1.1);
         template.save(config);
     }
 
