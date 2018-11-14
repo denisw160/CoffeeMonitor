@@ -72,7 +72,7 @@ If the application detects that no more data is being transferred, this is displ
 ![][image-8]
 
 The application can be used both on the desktop and on mobile devices.
-![][image-9]
+![][image-9]{:height="50%" width="50%"}
 
 The configuration of the weights (filling and empty weight) can be set directly in the web application. 
 ![][image-10]
