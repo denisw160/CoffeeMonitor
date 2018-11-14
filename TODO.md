@@ -1,8 +1,8 @@
-## Tasks and open points 
+## Tasks and open points
 
-Currently there are no open points.
+- Design of the scale casing for determining the weight of the coffee pot (protected against moisture and excessive weights / pressure on the coffee pot)
 
 ## Ideas and next steps
 
-Currently there are no new ideas.
-
+- Native app for iOS and Android
+- Indication when the coffee pot was last refilled
