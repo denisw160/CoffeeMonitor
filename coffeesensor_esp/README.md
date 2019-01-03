@@ -6,11 +6,12 @@ This module is written in the Arduino IDE.
 
 The data is send every two seconds. If you want another update interval, please change the variable INTERVAL.
 
-The connection of the hardware (sensors) can be found here (TODO LINK).
+The connection of the hardware (sensors) can be found [here][1].
+![Plug-in board for ESP8266][image-1]
 
 You need the following libraries in your Arduino IDE.
 
-- HX711_ADC by Olav Kallhovd (https://github.com/olkal/HX711_ADC)
+- HX711\_ADC by Olav Kallhovd ([https://github.com/olkal/HX711\_ADC][2])
 - (TODO add libraries)
 
 ### Install
@@ -18,7 +19,12 @@ For install the software, open the file CoffeeSensorEsp.ino in your Arduino IDE 
 
 ### Setup
 On the first start of the NodeMCU it try to connect to a WiFi. If no WiFi parameter set, the NodeMCU stops and create and open WiFi network (AutoConnectAP). 
-Please connect to this network and update your WiFi credentials and MQTT server. Then the NodeMCU restarts and automaticaly connect to your WiFi network.
+Please connect to this network and update your WiFi credentials and MQTT server. Then the NodeMCU restarts and automatically connect to your WiFi network.
 
 ### Debug
 In the serial monitor you can see the messages of the module.
+
+[1]:	CoffeeSensorEsp.fzz
+[2]:	https://github.com/olkal/HX711_ADC "GitHub for HX711"
+
+[image-1]:	CoffeeSensorEsp_Plug-in_board.png "Plug-in board for ESP8266"
