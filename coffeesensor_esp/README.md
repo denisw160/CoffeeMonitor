@@ -10,7 +10,8 @@ The connection of the hardware (sensors) can be found here (TODO LINK).
 
 You need the following libraries in your Arduino IDE.
 
-- 
+- HX711_ADC by Olav Kallhovd (https://github.com/olkal/HX711_ADC)
+- (TODO add libraries)
 
 ### Install
 For install the software, open the file CoffeeSensorEsp.ino in your Arduino IDE and flash the ESP8266.
