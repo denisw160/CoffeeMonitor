@@ -9,3 +9,4 @@
 - Native app for iOS and Android
 - Indication when the coffee pot was last refilled
 - Add RFID or NFC scanner for identify the coffee users / display the last users
+- Adding Machine Learning (ML) for detection of invalid sensor data
