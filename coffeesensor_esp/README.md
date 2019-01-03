@@ -4,6 +4,8 @@
 This module can be installed on a ESP8266 / NodeMCU. It starts the monitoring of the sensors (GPIO) and transmits the values to the MQTT broker. 
 This module is written in the Arduino IDE.
 
+The data is send every two seconds. If you want another update interval, please change the variable INTERVAL.
+
 The connection of the hardware (sensors) can be found here (TODO LINK).
 
 You need the following libraries in your Arduino IDE.
