@@ -41,6 +41,8 @@ The software consists of three modules:
 - [CoffeeService][4]: a Spring Boot application (Java) that receives messages from the MQTT Broker and stores them in a MongoDB. The application also provides a REST API to retrieve the data from the MongoDB.
 - [CoffeeApp][5]: An angular application that retrieves and displays the data via the REST service. 
 
+Optional you can use a ESP8266 as CoffeeSensor. You found the source and the wiring diagram in [CoffeeSensor_ESP][6].
+
 ### The prerequisites
 
 The following software components are required on the Raspberry:
@@ -85,6 +87,7 @@ The progression of the filling level as well as the refilling can be tracked in 
 [3]:	coffeesensor
 [4]:	coffeeservice
 [5]:	coffeeapp
+[5]:	coffeesensor_esp
 
 [image-1]:	documentation/CoffeeSensor_Showcase1.jpg "Showcase 1"
 [image-2]:	documentation/CoffeeSensor_Showcase2.jpg "Sensors"
