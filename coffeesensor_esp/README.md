@@ -22,6 +22,18 @@ For install the software, open the file CoffeeSensorEsp.ino in your Arduino IDE 
 On the first start of the NodeMCU it try to connect to a WiFi. If no WiFi parameter set, the NodeMCU stops and create and open WiFi network (AutoConnectAP). 
 Please connect to this network and update your WiFi credentials and MQTT server. Then the NodeMCU restarts and automatically connect to your WiFi network.
 
+You can canfigure the following MQTT parameter:
+
+- MQTT Server: IP or hostname of your MQTT server
+- MQTT Port: Your port of your server (default: 1883 or SSL: 8883)
+- MQTT Topic: The topic for the sensor data, you must have write access for this topic
+- MQTT User: Your username for the the server
+- MQTT Password: The password for the user
+- MQTT SSL: 1 for use SSL for the connection, 0 disable SSL
+
+The MQTT ID of the client is the hostname of the ESP8266.
+ 
+
 ### Debug
 In the serial monitor you can see the messages of the module.
 
