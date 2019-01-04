@@ -3,6 +3,7 @@ package me.wirries.coffeemonitor.coffeeservice.config;
 import me.wirries.coffeemonitor.coffeeservice.handler.SensorMessageHandler;
 import me.wirries.coffeemonitor.coffeeservice.repo.SensorDataRepository;
 import org.apache.commons.lang3.StringUtils;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +96,8 @@ public class MqttConfiguration {
     @Bean
     public MqttPahoClientFactory mqttClientFactory() {
         DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
-        factory.setServerURIs(mqttUrl);
+        MqttConnectOptions options = new MqttConnectOptions();
+        options.setServerURIs(new String[]{mqttUrl});
 
         if (StringUtils.isNotBlank(mqttTrustStore)) {
             LOGGER.info("Setup the trustStore");
@@ -104,15 +106,16 @@ public class MqttConfiguration {
             sslClientProps.setProperty("com.ibm.ssl.trustStorePassword", mqttTrustStorePassword);
             //sslClientProps.setProperty("com.ibm.ssl.keyStore", "...");
             //sslClientProps.setProperty("com.ibm.ssl.keyStorePassword", "...");
-            factory.setSslProperties(sslClientProps);
+            options.setSSLProperties(sslClientProps);
         }
 
         if (StringUtils.isNotBlank(mqttUser) && StringUtils.isNotBlank(mqttPassword)) {
             LOGGER.info("Setup login for MQTT server");
-            factory.setUserName(mqttUser);
-            factory.setPassword(mqttPassword);
+            options.setUserName(mqttUser);
+            options.setPassword(mqttPassword.toCharArray());
         }
 
+        factory.setConnectionOptions(options);
         return factory;
     }
 
