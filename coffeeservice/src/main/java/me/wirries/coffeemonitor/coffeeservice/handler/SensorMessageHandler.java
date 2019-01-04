@@ -20,6 +20,11 @@ import java.util.Date;
 
 /**
  * This is handler converts the message from mqtt to {@link SensorData} and stores in the database.
+ * <p>
+ * Supported JSON structures:
+ * <p>
+ * - {"timestamp": "2019-01-04T10:54:49.517000", "allocated": true, "weight": 1.0406128215270019}
+ * - {"allocated": true, "weight": 1.0406128215270019}
  *
  * @author denisw
  * @version 1.0
@@ -28,6 +33,9 @@ import java.util.Date;
 public class SensorMessageHandler implements MessageHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SensorMessageHandler.class);
+
+    private static final String PATTERN_LONG = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+    private static final String PATTERN_SHORT = "yyyy-MM-dd'T'HH:mm:ss";
 
     private SensorDataRepository repository;
 
@@ -56,7 +64,7 @@ public class SensorMessageHandler implements MessageHandler {
                 // Create new object from payload
                 SensorData data = new SensorData();
                 data.setId(ObjectId.get().toString());
-                String ts = StringUtils.substring(obj.get("timestamp").asText(), 0, 23);
+                String ts = getTimestamp(obj);
                 Date timestamp = parseTimestamp(ts);
                 data.setTimestamp(timestamp);
                 data.setAllocated(obj.get("allocated").asBoolean(false));
@@ -69,10 +77,33 @@ public class SensorMessageHandler implements MessageHandler {
         }
     }
 
+    /**
+     * Get the timestamp from JSON data or generate by the system.
+     *
+     * @param obj JSON object
+     * @return timestamp
+     */
+    private String getTimestamp(JsonNode obj) {
+        if (obj.has("timestamp")) {
+            return StringUtils.substring(obj.get("timestamp").asText(), 0, 23);
+        } else {
+            // Format "2019-01-04T10:54:49.517"
+            SimpleDateFormat sdf = new SimpleDateFormat(PATTERN_LONG);
+            return sdf.format(new Date());
+        }
+    }
+
+    /**
+     * Parse given timestamp (String) to Date.
+     *
+     * @param ts Timestamp
+     * @return Date
+     * @throws ParseException Exception during parsing
+     */
     private Date parseTimestamp(String ts) throws ParseException {
-        String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+        String pattern = PATTERN_LONG;
         if (StringUtils.length(ts) == 19) {
-            pattern = "yyyy-MM-dd'T'HH:mm:ss";
+            pattern = PATTERN_SHORT;
         }
         return new SimpleDateFormat(pattern).parse(ts);
     }
