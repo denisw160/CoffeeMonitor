@@ -12,7 +12,8 @@ The connection of the hardware (sensors) can be found [here][1].
 You need the following libraries in your Arduino IDE.
 
 - HX711\_ADC by Olav Kallhovd ([https://github.com/olkal/HX711\_ADC][2])
-- (TODO add libraries)
+- ArduinoMqtt by Oleg Kovalenko ([https://github.com/monstrenyatko/ArduinoMqtt][3])
+- WiFiManager by tzapu ([https://github.com/tzapu/WiFiManager][4])
 
 ### Install
 For install the software, open the file CoffeeSensorEsp.ino in your Arduino IDE and flash the ESP8266.
@@ -26,5 +27,7 @@ In the serial monitor you can see the messages of the module.
 
 [1]:	CoffeeSensorEsp.fzz
 [2]:	https://github.com/olkal/HX711_ADC "GitHub for HX711"
+[3]:    https://github.com/monstrenyatko/ArduinoMqtt "GitHub for ArdunioMqtt"
+[4]:    https://github.com/tzapu/WiFiManager "GitHub for WiFiManager"
 
 [image-1]:	CoffeeSensorEsp_Plug-in_board.png "Plug-in board for ESP8266"
