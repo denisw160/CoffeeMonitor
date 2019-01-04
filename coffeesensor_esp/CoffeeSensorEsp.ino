@@ -1,10 +1,12 @@
 // External libraries
+#include <FS.h> // this needs to be first, or it all crashes and burns...
 #include <ESP8266WiFi.h>
 #include <DNSServer.h>
 #include <WiFiManager.h>
 #include <ESP8266WebServer.h>
 #include <HX711_ADC.h>
 #include <MqttClient.h>
+#include <ArduinoJson.h>
 
 // Interval for update
 #define INTERVAL 2000
@@ -19,10 +21,12 @@
 #define WEIGHT_SCK D2
 #define WEIGHT_DT D3
 
-// Control Parameter - TODO replace with WiFiManager
-#define MQTTSERVER "192.168.0.104"
-#define MQTTPORT 1883
-#define MQTTTOPIC "me/wirries/coffeesensor"
+
+// Control Parameter
+// define your default values here, if there are different values in config.json, they are overwritten.
+char mqttServer[50];
+char mqttPort[6] = "1883";
+char mqttTopic[50] = "me/wirries/coffeesensor";
 
 
 // HX711 - constructor (dout pin, sck pin):
@@ -32,6 +36,7 @@ HX711_ADC LoadCell(WEIGHT_DT, WEIGHT_SCK);
 MqttClient *mqtt = NULL;
 WiFiClient network;
 String mqttId;
+int mPort;
 
 // Heartbeat status
 boolean led = false;
@@ -39,7 +44,8 @@ boolean led = false;
 // Time mills for update
 long t;
 
-
+// Flag for saving data
+bool shouldSaveConfig = false;
 
 
 //
@@ -64,22 +70,77 @@ void setup() {
   Serial.begin(115200);
   Serial.println("Booting ...");
 
+
   // Initialize the pins as in-/output
   Serial.println("Initialize pins ...");
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(ALLOCATION_SENSOR, INPUT);
+
+
+  // Handle configuration
+  // Clean filesystem - remove old config
+  //SPIFFS.format();
+
+  // Read configuration from FS json
+  Serial.println("Mounting file system ...");
+  if (SPIFFS.begin()) {
+    if (SPIFFS.exists("/config.json")) {
+      // File exists, reading and loading
+      Serial.println("Loading config from file ...");
+      File configFile = SPIFFS.open("/config.json", "r");
+      if (configFile) {
+        size_t size = configFile.size();
+        std::unique_ptr<char[]> buf(new char[size]);
+        configFile.readBytes(buf.get(), size);
+        DynamicJsonBuffer jsonBuffer;
+        JsonObject& json = jsonBuffer.parseObject(buf.get());
+
+        if (DEBUG) json.printTo(Serial);
+        if (json.success()) {
+          if (DEBUG) Serial.println("\nConfig parsed");
+
+          strcpy(mqttServer, json["mqtt_server"]);
+          strcpy(mqttPort, json["mqtt_port"]);
+          strcpy(mqttTopic, json["mqtt_topic"]);
+
+          Serial.println("Config loaded");
+        } else {
+          Serial.println("Failed to load config");
+        }
+        configFile.close();
+      }
+    }
+  } else {
+    Serial.println("Failed to mount file system");
+  }
+
+  // The extra parameters to be configured (can be either global or just in the setup)
+  // After connecting, parameter.getValue() will get you the configured value
+  // id/name placeholder/prompt default length
+  WiFiManagerParameter customMqttServer("server", "mqtt server", mqttServer, 50);
+  WiFiManagerParameter customMqttPort("port", "mqtt port", mqttPort, 6);
+  WiFiManagerParameter customMqttTopic("topic", "mqtt topic", mqttTopic, 50);
+
 
   // WiFiManager - local intialization.
   WiFiManager wifiManager;
   // reset saved settings - for deleting the settings
   //wifiManager.resetSettings();
 
+  // set config save notify callback
+  wifiManager.setSaveConfigCallback(saveConfigCallback);
+
+  // add all parameters
+  wifiManager.addParameter(&customMqttServer);
+  wifiManager.addParameter(&customMqttPort);
+  wifiManager.addParameter(&customMqttTopic);
+
   // fetches ssid and pass from eeprom and tries to connect
   // if it does not connect it starts an access point
   // and goes into a blocking loop awaiting configuration
   wifiManager.autoConnect("AutoConnectAP");
 
-  Serial.print("Connecting to WiFi ");
+  Serial.print("Connecting to WiFi .");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
@@ -90,6 +151,32 @@ void setup() {
 
   // Setup hostname as MQTT_ID
   mqttId = WiFi.hostname();
+
+  // Setup / update parameter
+  strcpy(mqttServer, customMqttServer.getValue());
+  strcpy(mqttPort, customMqttPort.getValue());
+  strcpy(mqttTopic, customMqttTopic.getValue());
+
+  // Save the custom parameters to file system
+  if (shouldSaveConfig) {
+    Serial.println("Saving config ...");
+    DynamicJsonBuffer jsonBuffer;
+    JsonObject& json = jsonBuffer.createObject();
+    json["mqtt_server"] = mqttServer;
+    json["mqtt_port"] = mqttPort;
+    json["mqtt_topic"] = mqttTopic;
+
+    File configFile = SPIFFS.open("/config.json", "w");
+    if (!configFile) {
+      Serial.println("Failed to open config file for writing");
+    }
+
+    json.printTo(Serial);
+    json.printTo(configFile);
+    configFile.close();
+    Serial.println("Config saved");
+  }
+
 
   // Initialize MqttClient
   Serial.println("Initialize MQTT client ...");
@@ -103,6 +190,7 @@ void setup() {
   mqttOptions.commandTimeoutMs = 10000;
   mqtt = new MqttClient(mqttOptions, *mqttLogger, *mqttSystem, *mqttNetwork, *mqttSendBuffer, *mqttRecvBuffer, *mqttMessageHandlers);
   Serial.println("MQTT client is ready");
+
 
   // Initialize weight sensor
   Serial.println("Initialize weight sensor ...");
@@ -128,6 +216,10 @@ void setup() {
     LoadCell.setCalFactor(calValue); // set calibration value (float)
     Serial.println("Weight sensor is ready");
   }
+
+
+  // Setup port
+  mPort = String(mqttPort).toInt();
 
   Serial.println("Setup completed.");
 }
@@ -195,7 +287,7 @@ void sendMqttMessage(boolean allocation, float weight) {
     network.stop(); // Close connection if exists
 
     Serial.println("Reconnecting to MQTT server ...");
-    network.connect(MQTTSERVER, MQTTPORT); // Re-establish TCP connection with MQTT broker
+    network.connect(mqttServer, mPort); // Re-establish TCP connection with MQTT broker
     if (!network.connected()) {
       Serial.println("Can't establish the TCP connection");
     }
@@ -232,7 +324,7 @@ void sendMqttMessage(boolean allocation, float weight) {
       message.dup = false;
       message.payload = (void*) buf;
       message.payloadLen = strlen(buf);
-      mqtt->publish(MQTTTOPIC, message);
+      mqtt->publish(mqttTopic, message);
 
       if (DEBUG) {
         Serial.print("MQTT message send: ");
@@ -254,5 +346,11 @@ void heartbeat() {
     if (!DEBUG) Serial.print("-");
     led = true;
   }
+}
+
+// callback notifying us of the need to save config
+void saveConfigCallback () {
+  if (DEBUG) Serial.println("Should save config");
+  shouldSaveConfig = true;
 }
 
