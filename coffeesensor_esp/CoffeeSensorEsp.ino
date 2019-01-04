@@ -27,6 +27,9 @@
 char mqttServer[50];
 char mqttPort[6] = "1883";
 char mqttTopic[50] = "me/wirries/coffeesensor";
+char mqttSsl[2] = "0";
+char mqttUsername[50];
+char mqttPassword[50];
 
 
 // HX711 - constructor (dout pin, sck pin):
@@ -35,8 +38,11 @@ HX711_ADC LoadCell(WEIGHT_DT, WEIGHT_SCK);
 // MqttClient
 MqttClient *mqtt = NULL;
 WiFiClient network;
+WiFiClientSecure netsecure;
 String mqttId;
 int mPort;
+bool mSsl;
+bool mSecure;
 
 // Heartbeat status
 boolean led = false;
@@ -102,6 +108,9 @@ void setup() {
           strcpy(mqttServer, json["mqtt_server"]);
           strcpy(mqttPort, json["mqtt_port"]);
           strcpy(mqttTopic, json["mqtt_topic"]);
+          strcpy(mqttSsl, json["mqtt_ssl"]);
+          strcpy(mqttUsername, json["mqtt_username"]);
+          strcpy(mqttPassword, json["mqtt_password"]);
 
           Serial.println("Config loaded");
         } else {
@@ -118,9 +127,11 @@ void setup() {
   // After connecting, parameter.getValue() will get you the configured value
   // id/name placeholder/prompt default length
   WiFiManagerParameter customMqttServer("server", "mqtt server", mqttServer, 50);
-  WiFiManagerParameter customMqttPort("port", "mqtt port", mqttPort, 6);
+  WiFiManagerParameter customMqttPort("port", "mqtt port [int]", mqttPort, 6);
   WiFiManagerParameter customMqttTopic("topic", "mqtt topic", mqttTopic, 50);
-
+  WiFiManagerParameter customMqttSsl("ssl", "mqtt ssl - 0 or 1", mqttSsl, 2);
+  WiFiManagerParameter customMqttUsername("username", "mqtt username - blank for disable", mqttUsername, 50);
+  WiFiManagerParameter customMqttPassword("password", "mqtt password - blank for disable", mqttPassword, 50);
 
   // WiFiManager - local intialization.
   WiFiManager wifiManager;
@@ -134,6 +145,9 @@ void setup() {
   wifiManager.addParameter(&customMqttServer);
   wifiManager.addParameter(&customMqttPort);
   wifiManager.addParameter(&customMqttTopic);
+  wifiManager.addParameter(&customMqttSsl);
+  wifiManager.addParameter(&customMqttUsername);
+  wifiManager.addParameter(&customMqttPassword);
 
   // fetches ssid and pass from eeprom and tries to connect
   // if it does not connect it starts an access point
@@ -156,6 +170,9 @@ void setup() {
   strcpy(mqttServer, customMqttServer.getValue());
   strcpy(mqttPort, customMqttPort.getValue());
   strcpy(mqttTopic, customMqttTopic.getValue());
+  strcpy(mqttSsl, customMqttSsl.getValue());
+  strcpy(mqttUsername, customMqttUsername.getValue());
+  strcpy(mqttPassword, customMqttPassword.getValue());
 
   // Save the custom parameters to file system
   if (shouldSaveConfig) {
@@ -165,24 +182,32 @@ void setup() {
     json["mqtt_server"] = mqttServer;
     json["mqtt_port"] = mqttPort;
     json["mqtt_topic"] = mqttTopic;
+    json["mqtt_ssl"] = mqttSsl;
+    json["mqtt_username"] = mqttUsername;
+    json["mqtt_password"] = mqttPassword;
 
     File configFile = SPIFFS.open("/config.json", "w");
     if (!configFile) {
       Serial.println("Failed to open config file for writing");
     }
 
-    json.printTo(Serial);
+    if (DEBUG) json.printTo(Serial);
     json.printTo(configFile);
     configFile.close();
-    Serial.println("Config saved");
+    Serial.println("\nConfig saved");
   }
+
+  // Setup port
+  mPort = String(mqttPort).toInt();
+  mSsl = String(mqttSsl) == "1";
+  mSecure = String(mqttUsername).length() > 0;
 
 
   // Initialize MqttClient
   Serial.println("Initialize MQTT client ...");
   MqttClient::System *mqttSystem = new MqttSystem();
   MqttClient::Logger *mqttLogger = new MqttClient::LoggerImpl<HardwareSerial>(Serial);
-  MqttClient::Network *mqttNetwork = new MqttClient::NetworkClientImpl<WiFiClient>(network, *mqttSystem);
+  MqttClient::Network *mqttNetwork = mSsl ?  new MqttClient::NetworkClientImpl<WiFiClient>(netsecure, *mqttSystem) : new MqttClient::NetworkClientImpl<WiFiClient>(network, *mqttSystem);
   MqttClient::Buffer *mqttSendBuffer = new MqttClient::ArrayBuffer<128>();
   MqttClient::Buffer *mqttRecvBuffer = new MqttClient::ArrayBuffer<128>();
   MqttClient::MessageHandlers *mqttMessageHandlers = new MqttClient::MessageHandlersImpl<2>();
@@ -216,10 +241,6 @@ void setup() {
     LoadCell.setCalFactor(calValue); // set calibration value (float)
     Serial.println("Weight sensor is ready");
   }
-
-
-  // Setup port
-  mPort = String(mqttPort).toInt();
 
   Serial.println("Setup completed.");
 }
@@ -284,12 +305,20 @@ float readWeight() {
 void sendMqttMessage(boolean allocation, float weight) {
   // Check connection status
   if (!mqtt->isConnected()) {
-    network.stop(); // Close connection if exists
-
-    Serial.println("Reconnecting to MQTT server ...");
-    network.connect(mqttServer, mPort); // Re-establish TCP connection with MQTT broker
-    if (!network.connected()) {
-      Serial.println("Can't establish the TCP connection");
+    if (mSsl) {
+      netsecure.stop(); // Close connection if exists
+      Serial.println("Reconnecting to MQTT server (secure) ...");
+      netsecure.connect(mqttServer, mPort); // Re-establish TCP connection with MQTT broker (secure)
+      if (!netsecure.connected()) {
+        Serial.println("Can't establish the TCP connection");
+      }
+    } else {
+      network.stop(); // Close connection if exists
+      Serial.println("Reconnecting to MQTT server ...");
+      network.connect(mqttServer, mPort); // Re-establish TCP connection with MQTT broker
+      if (!network.connected()) {
+        Serial.println("Can't establish the TCP connection");
+      }
     }
 
     // Start new MQTT connection
@@ -298,6 +327,11 @@ void sendMqttMessage(boolean allocation, float weight) {
       // Connect
       MQTTPacket_connectData options = MQTTPacket_connectData_initializer;
       options.MQTTVersion = 4;
+      if (mSecure) {
+        Serial.println("Using login for mqtt  ...");
+        options.username.cstring = (char*)mqttUsername;
+        options.password.cstring = (char*)mqttPassword;
+      }
       options.clientID.cstring = (char*)mqttId.c_str();
       options.cleansession = true;
       options.keepAliveInterval = 15; // 15 seconds
