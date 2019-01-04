@@ -3,9 +3,9 @@ spring:
   # Database - MongoDB
   data:
     mongodb:
-      host: localhost
-      database: coffeeservice
-      port: 27017
+      host: ${app.db.host}
+      database: ${app.db.database}
+      port: ${app.db.port}
 
 # Logging - alternative you can use logback with log rotation
 logging.file: coffeeservice.log
@@ -21,3 +21,19 @@ logging:
       wirries:
         coffeemonitor:
           coffeeservice: DEBUG
+
+## Application Configuration
+# You can override this parameter with the program arguments
+app:
+  db:
+    host: localhost
+    database: coffeeservice
+    port: 27017
+  mqtt:
+    url: tcp://localhost:1883
+    ssl: false
+    topic: me/wirries/coffeesensor
+    user:
+    password:
+    trustStore:
+    trustStorePassword:
