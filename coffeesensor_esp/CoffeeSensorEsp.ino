@@ -4,6 +4,9 @@
 // Interval for update
 #define INTERVAL 2000
 
+// Show debug messages in serial
+#define DEBUG true
+
 // Port on NodeMCU (D1) for the allocation sensor
 #define ALLOCATION_SENSOR D1
 
@@ -66,39 +69,73 @@ void loop() {
   // use of delay in sketch will reduce effective sample rate (be carefull with use of delay() in the loop)
   LoadCell.update();
 
+  // Update and send data in interval
   if (millis() > t + INTERVAL) {
-    updateData();
+    boolean allocation = readAllocation();
+    float weight = readWeight();
+    sendMqttMessage(allocation, weight);
+
     heartbeat();
     t = millis();
   }
 }
 
-void updateData() {
-  // TODO reading sensors
-  int val = digitalRead(ALLOCATION_SENSOR);
-  Serial.print("Allocation Sensor is: ");
-  if (val == 0) {
-    Serial.println("allocated");
-  } else {
-    Serial.println("free");
+//
+// Read the allocation from the sensor and
+// return the value as boolean.
+// - TRUE=allocated
+// - FALSE=free
+boolean readAllocation() {
+  boolean allocation = digitalRead(ALLOCATION_SENSOR) == 0;
+
+  // Debug message
+  if (DEBUG) {
+    Serial.print("Allocation is: ");
+    if (allocation) {
+      Serial.println("allocated");
+    } else {
+      Serial.println("free");
+    }
   }
 
-  float i = LoadCell.getData();
-  Serial.print("Load_cell output val: ");
-  Serial.println(i);
-
-  // TODO send data to server
+  return allocation;
 }
 
+//
+// Read the weight from the sensor and
+// return the value.
+float readWeight() {
+  float weight = LoadCell.getData();
 
+  // Debug message
+  if (DEBUG) {
+    Serial.print("Weight is: ");
+    Serial.println(weight);
+  }
+
+  return weight;
+}
+
+//
+// Convert the sensor values to a JSON message
+// and send the message to the MQTT broker.
+void sendMqttMessage(boolean allocation, float weight) {
+
+  // TODO send data to server
+
+}
+
+//
+// Toogle the LED and write an message ro serial.
 void heartbeat() {
   if (led) {
     digitalWrite(LED_BUILTIN, LOW);
-    //Serial.print("*");
+    if (!DEBUG) Serial.print("*");
     led = false;
   } else {
     digitalWrite(LED_BUILTIN, HIGH);
-    //Serial.print("-");
+    if (!DEBUG) Serial.print("-");
     led = true;
   }
 }
+
