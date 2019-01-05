@@ -1,6 +1,9 @@
+import argparse
 import datetime
 import json
 import signal
+import socket
+import ssl
 import time
 
 import RPi.GPIO as GPIO
@@ -21,6 +24,7 @@ from hx711 import HX711
 #
 # require modules
 #  - paho-mqtt (pip)
+#  - numpy (pip)
 #  - python-dev + python-rpi.gpio (apt)
 #    or for development fakeRPiGPIO (pip)
 #
@@ -29,9 +33,9 @@ from hx711 import HX711
 
 MQTT_HOST = "localhost"
 MQTT_PORT = 1883
-MQTT_KEEPALIVE_INTERVAL = 45
 MQTT_TOPIC = "me/wirries/coffeesensor"
-INTERVAL = 25
+MQTT_KEEPALIVE_INTERVAL = 45
+INTERVAL = 15
 
 # Using GPIO numbers
 ALLOCATED_SENSOR = 5  # GPIO 05 / PIN 29
@@ -59,19 +63,60 @@ def on_publish(client, userdata, mid):
     print "Message published"
 
 
+# Define isNotBlank function for testing, if a String is blank
+def is_not_blank(s):
+    if s and s.strip():
+        return True
+    return False
+
+
 # Starting server
+ap = argparse.ArgumentParser()
+ap.add_argument("-s", "--server", required=False, help="server / default: " + MQTT_HOST, default=MQTT_HOST)
+ap.add_argument("-p", "--port", required=False, help="port / default: " + str(MQTT_PORT), default=str(MQTT_PORT))
+ap.add_argument("-c", "--ca", required=False, help="path to ca file (full chain) to verify the SSL connection")
+ap.add_argument("-t", "--topic", required=False, help="topic for publish / default: " + MQTT_TOPIC, default=MQTT_TOPIC)
+ap.add_argument("-u", "--user", required=False, help="username for login")
+ap.add_argument("-w", "--password", required=False, help="password for user")
+args = vars(ap.parse_args())
+
+host = args["server"]
+port = args["port"]
+ca = args["ca"]
+topic = args["topic"]
+user = args["user"]
+password = args["password"]
+
 print "CoffeeSensor started - for stopping please press CRTL-c"
 print " - MQTT-Broker:", MQTT_HOST
 print " - MQTT-Port:", MQTT_PORT
 print " - MQTT-Keepalive:", MQTT_KEEPALIVE_INTERVAL
 print " - MQTT-Topic:", MQTT_TOPIC
 
+loginEnabled = is_not_blank(user) and is_not_blank(password)
+if loginEnabled:
+    print " - use login for connection with user:", user
+
+sslEnabled = is_not_blank(ca)
+if sslEnabled:
+    print " - use ca file for SSL connection:", ca
+
 # Initiate MQTT Client
-mqttc = MQTT.Client()
+mqttc = MQTT.Client(client_id="CoffeeSensor_" + socket.gethostname())
 # Register publish callback function
 mqttc.on_publish = on_publish
+
+# Setup login for connection
+if loginEnabled:
+    mqttc.username_pw_set(user, password)
+
+# Setup SSL connection
+if sslEnabled:
+    mqttc.tls_set(ca, tls_version=ssl.PROTOCOL_TLSv1_2)
+    mqttc.tls_insecure_set(False)
+
 # Connect with MQTT Broker
-mqttc.connect(MQTT_HOST, MQTT_PORT, MQTT_KEEPALIVE_INTERVAL)
+mqttc.connect(host, port, MQTT_KEEPALIVE_INTERVAL)
 
 # Setup GPIO layout
 GPIO.setmode(GPIO.BCM)
@@ -118,7 +163,7 @@ try:
         print "MQTT message: ", msg
 
         # Publish message to MQTT Broker
-        mqttc.publish(MQTT_TOPIC, msg)
+        mqttc.publish(topic, msg)
 
         if killer.kill_now:
             break

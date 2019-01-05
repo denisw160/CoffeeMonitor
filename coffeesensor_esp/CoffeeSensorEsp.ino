@@ -9,7 +9,7 @@
 #include <ArduinoJson.h>
 
 // Interval for update
-#define INTERVAL 2000
+#define INTERVAL 15000
 
 // Show debug messages in serial
 #define DEBUG true
@@ -164,7 +164,7 @@ void setup() {
   Serial.println("IP: " + WiFi.localIP().toString());
 
   // Setup hostname as MQTT_ID
-  mqttId = WiFi.hostname();
+  mqttId = "CoffeeSensor_" + WiFi.hostname();
 
   // Setup / update parameter
   strcpy(mqttServer, customMqttServer.getValue());
@@ -334,7 +334,7 @@ void sendMqttMessage(boolean allocation, float weight) {
       }
       options.clientID.cstring = (char*)mqttId.c_str();
       options.cleansession = true;
-      options.keepAliveInterval = 15; // 15 seconds
+      options.keepAliveInterval = 45; // 45 seconds
       MqttClient::Error::type rc = mqtt->connect(options, connectResult);
       if (rc != MqttClient::Error::SUCCESS) {
         Serial.print("Connection error: ");
@@ -387,4 +387,3 @@ void saveConfigCallback () {
   if (DEBUG) Serial.println("Should save config");
   shouldSaveConfig = true;
 }
-

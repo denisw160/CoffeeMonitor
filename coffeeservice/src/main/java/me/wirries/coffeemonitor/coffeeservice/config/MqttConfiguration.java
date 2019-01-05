@@ -98,6 +98,7 @@ public class MqttConfiguration {
         DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
         MqttConnectOptions options = new MqttConnectOptions();
         options.setServerURIs(new String[]{mqttUrl});
+        options.setKeepAliveInterval(45);
 
         if (StringUtils.isNotBlank(mqttTrustStore)) {
             LOGGER.info("Setup the trustStore");
@@ -139,10 +140,10 @@ public class MqttConfiguration {
      */
     private String getClientId() {
         try {
-            return InetAddress.getLocalHost().getHostName();
+            return "CoffeeService_" + InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException e) {
             LOGGER.error("Unable to get local hostname");
-            return "UNKNOWN";
+            return "CoffeeService_UNKNOWN";
         }
     }
 
