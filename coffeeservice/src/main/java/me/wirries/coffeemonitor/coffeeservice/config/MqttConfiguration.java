@@ -98,6 +98,7 @@ public class MqttConfiguration {
         DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
         MqttConnectOptions options = new MqttConnectOptions();
         options.setServerURIs(new String[]{mqttUrl});
+        options.setKeepAliveInterval(45);
 
         if (StringUtils.isNotBlank(mqttTrustStore)) {
             LOGGER.info("Setup the trustStore");
