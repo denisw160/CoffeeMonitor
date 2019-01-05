@@ -4,7 +4,7 @@
 This module can be installed on a ESP8266 / NodeMCU. It starts the monitoring of the sensors (GPIO) and transmits the values to the MQTT broker. 
 This module is written in the Arduino IDE.
 
-The data is send every two seconds. If you want another update interval, please change the variable INTERVAL.
+The data is send every 15 seconds. If you want another update interval, please change the variable INTERVAL.
 
 The connection of the hardware (sensors) can be found [here][1].
 ![Plug-in board for ESP8266][image-1]
@@ -37,9 +37,9 @@ The MQTT ID of the client is the hostname of the ESP8266.
 ### Debug
 In the serial monitor you can see the messages of the module.
 
-[1]:	CoffeeSensorEsp.fzz
+[1]:	../documentation/CoffeeSensorEsp.fzz
 [2]:	https://github.com/olkal/HX711_ADC "GitHub for HX711"
 [3]:    https://github.com/monstrenyatko/ArduinoMqtt "GitHub for ArdunioMqtt"
 [4]:    https://github.com/tzapu/WiFiManager "GitHub for WiFiManager"
 
-[image-1]:	CoffeeSensorEsp_Plug-in_board.png "Plug-in board for ESP8266"
+[image-1]:	../documentation/CoffeeSensorEsp_Plug-in_board.png "Plug-in board for ESP8266"
