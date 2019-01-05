@@ -139,10 +139,10 @@ public class MqttConfiguration {
      */
     private String getClientId() {
         try {
-            return InetAddress.getLocalHost().getHostName();
+            return "CoffeeService_" + InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException e) {
             LOGGER.error("Unable to get local hostname");
-            return "UNKNOWN";
+            return "CoffeeService_UNKNOWN";
         }
     }
 
