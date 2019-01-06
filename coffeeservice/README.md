@@ -30,3 +30,7 @@ For clean and building the service the following scripts can be used.
 
     bash>clean.sh
     bash>build.sh
+
+To start the Docker build, execute this script
+
+    bash>docker_build.sh
