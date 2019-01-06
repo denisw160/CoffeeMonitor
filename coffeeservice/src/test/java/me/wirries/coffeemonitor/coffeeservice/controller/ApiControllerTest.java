@@ -21,6 +21,11 @@ public class ApiControllerTest extends CoffeeServiceRepositoryTests {
     private ApiController controller;
 
     @Test
+    public void login() {
+        // TODO Test
+    }
+
+    @Test
     public void getAlive() throws Exception {
         Alive alive = controller.getAlive();
         assertNotNull(alive.getTimestamp());

@@ -49,6 +49,17 @@ public class ApiController {
     }
 
     /**
+     * This simple method return the result of the login. If the the user is authenticated,
+     * it return success=true.
+     *
+     * @return result of the login
+     */
+    @GetMapping("/login")
+    public LoginResult login() {
+        return new LoginResult(true);
+    }
+
+    /**
      * Return the status of the coffee sensors.
      *
      * @return Alive-Status

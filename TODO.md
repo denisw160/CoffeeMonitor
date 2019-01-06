@@ -4,6 +4,7 @@
 - Adding parameter for server configuration (urls to mqtt, service, database, ...)
 - Creating docker images for deployment
 - Add reset button for ESP8266
+- Add JWT for securing the connection
 
 ## Ideas and next steps
 
