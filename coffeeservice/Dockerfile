@@ -19,7 +19,7 @@ EXPOSE 8080
 # Run service
 ENTRYPOINT [ "/usr/bin/java", "-jar", "camera-service.jar", "--spring.profiles.active=production" ]
 # TODO Adding configuration parameter from CMD line
-#--app.db.host=xxxx
+#--app.db.host=db
 #--app.db.database=coffeeservice
 #--app.db.port=27017
 #--app.mqtt.url=ssl://xxx:8883
