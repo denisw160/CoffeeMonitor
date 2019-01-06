@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import 'rxjs/add/operator/map';
@@ -12,7 +12,8 @@ export class ApiService {
 
   private readonly mockUpMode: boolean;
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient,
+              @Inject('BASE_URL') private _baseHref: string) {
     this.mockUpMode = environment.mockUpMode;
     if (this.mockUpMode) {
       console.log('Run api services in mockUp mode');
@@ -26,9 +27,9 @@ export class ApiService {
    */
   getAlive(): Observable<AliveModel> {
     if (this.mockUpMode) {
-      return this._http.get<AliveModel>('/assets/mock_api_alive.json');
+      return this._http.get<AliveModel>(this._baseHref + 'assets/mock_api_alive.json');
     } else {
-      return this._http.get<AliveModel>('/api/alive');
+      return this._http.get<AliveModel>(this._baseHref + 'api/alive');
     }
   }
 
@@ -39,9 +40,9 @@ export class ApiService {
    */
   getConfig(): Observable<ConfigModel> {
     if (this.mockUpMode) {
-      return this._http.get<ConfigModel>('/assets/mock_api_config.json');
+      return this._http.get<ConfigModel>(this._baseHref + 'assets/mock_api_config.json');
     } else {
-      return this._http.get<ConfigModel>('/api/config');
+      return this._http.get<ConfigModel>(this._baseHref + 'api/config');
     }
   }
 
@@ -56,7 +57,7 @@ export class ApiService {
       })
     };
 
-    return this._http.post('/api/config', JSON.stringify(config), httpOptions);
+    return this._http.post(this._baseHref + 'api/config', JSON.stringify(config), httpOptions);
   }
 
   // Data Services
@@ -66,9 +67,9 @@ export class ApiService {
    */
   getData(): Observable<SensordataModel[]> {
     if (this.mockUpMode) {
-      return this._http.get<SensordataModel[]>('/assets/mock_api_data_7days.json');
+      return this._http.get<SensordataModel[]>(this._baseHref + 'assets/mock_api_data_7days.json');
     } else {
-      return this._http.get<SensordataModel[]>('/api/data/7days');
+      return this._http.get<SensordataModel[]>(this._baseHref + 'api/data/7days');
     }
   }
 
@@ -77,9 +78,9 @@ export class ApiService {
    */
   getDataLatest(): Observable<SensordataModel> {
     if (this.mockUpMode) {
-      return this._http.get<SensordataModel>('/assets/mock_api_data_latest.json');
+      return this._http.get<SensordataModel>(this._baseHref + 'assets/mock_api_data_latest.json');
     } else {
-      return this._http.get<SensordataModel>('/api/data/latest');
+      return this._http.get<SensordataModel>(this._baseHref + 'api/data/latest');
     }
   }
 
@@ -88,9 +89,9 @@ export class ApiService {
    */
   getConsumption(): Observable<ConsumptionModel[]> {
     if (this.mockUpMode) {
-      return this._http.get<ConsumptionModel[]>('/assets/mock_api_consumption_7days.json');
+      return this._http.get<ConsumptionModel[]>(this._baseHref + 'assets/mock_api_consumption_7days.json');
     } else {
-      return this._http.get<ConsumptionModel[]>('/api/consumption/7days');
+      return this._http.get<ConsumptionModel[]>(this._baseHref + 'api/consumption/7days');
     }
   }
 
@@ -99,9 +100,9 @@ export class ApiService {
    */
   getConsumptionLatest(): Observable<ConsumptionModel> {
     if (this.mockUpMode) {
-      return this._http.get<ConsumptionModel>('/assets/mock_api_consumption_latest.json');
+      return this._http.get<ConsumptionModel>(this._baseHref + 'assets/mock_api_consumption_latest.json');
     } else {
-      return this._http.get<ConsumptionModel>('/api/consumption/latest');
+      return this._http.get<ConsumptionModel>(this._baseHref + 'api/consumption/latest');
     }
   }
 

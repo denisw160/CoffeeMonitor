@@ -34,9 +34,17 @@ import {AuthInterceptor, BasicInterceptor} from './_interceptor';
     ApiService,
     AuthService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: BasicInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: BasicInterceptor, multi: true},
+    {provide: 'BASE_URL', useFactory: getBaseUrl}
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
+}
+
+/**
+ * Return the base url of the application.
+ */
+export function getBaseUrl() {
+  return document.getElementsByTagName('base')[0].href;
 }

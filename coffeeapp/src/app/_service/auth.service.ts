@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {LoginModel, UserModel} from '../_model';
@@ -14,7 +14,8 @@ export class AuthService {
 
   private user: UserModel;
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient,
+              @Inject('BASE_URL') private _baseHref: string) {
     this.mockUpMode = environment.mockUpMode;
     if (this.mockUpMode) {
       console.log('Run auth services in mockUp mode');
@@ -101,9 +102,9 @@ export class AuthService {
    */
   getLogin(): Observable<LoginModel> {
     if (this.mockUpMode) {
-      return this._http.get<LoginModel>('/assets/mock_api_login.json');
+      return this._http.get<LoginModel>(this._baseHref + 'assets/mock_api_login.json');
     } else {
-      return this._http.get<LoginModel>('/api/login');
+      return this._http.get<LoginModel>(this._baseHref + 'api/login');
     }
   }
 
@@ -113,7 +114,7 @@ export class AuthService {
       async: false,
       type: 'GET',
       dataType: 'json',
-      url: '/api/login',
+      url: this._baseHref + 'api/login',
       headers: headers || {},
       success: function (data) {
         model.user = data.user;
