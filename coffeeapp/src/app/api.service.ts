@@ -2,10 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import 'rxjs/add/operator/map';
-import {SensordataModel} from './model/sensordata.model';
-import {AliveModel} from './model/alive.model';
-import {ConfigModel} from './model/config.model';
-import {ConsumptionModel} from './model/consumption.model';
+import {AliveModel, ConfigModel, ConsumptionModel, SensordataModel} from './_model/';
 import {environment} from '../environments/environment';
 
 @Injectable({
