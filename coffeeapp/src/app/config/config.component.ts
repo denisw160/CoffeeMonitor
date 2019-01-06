@@ -25,6 +25,9 @@ export class ConfigComponent implements OnInit {
     });
   }
 
+  ngOnInit() {
+  }
+
   onSubmit() {
     // console.log('Submitting configuration: ' + this.config.maxWeight);
 
@@ -32,17 +35,12 @@ export class ConfigComponent implements OnInit {
     this.showError = false;
 
     const request = this._api.postConfig(this.config);
-    request.subscribe(data => {
-        // console.log('Submit success: ' + data['statusCode']);
+    request.subscribe(() => {
         this.showSuccess = true;
       },
-      error => {
-        // console.log('Submit failed: ' + error['statusCode']);
+      () => {
         this.showError = true;
       });
-  }
-
-  ngOnInit() {
   }
 
 }

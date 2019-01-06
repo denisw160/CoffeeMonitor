@@ -10,17 +10,13 @@ import {environment} from '../../environments/environment';
 })
 export class ApiService {
 
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
-
   private readonly mockUpMode: boolean;
 
   constructor(private _http: HttpClient) {
     this.mockUpMode = environment.mockUpMode;
-    // console.debug('Run services in mockUp mode: ' + this.mockUpMode);
+    if (this.mockUpMode) {
+      console.log('Run api services in mockUp mode');
+    }
   }
 
   // Status Services
@@ -54,7 +50,13 @@ export class ApiService {
    * @param config Configuration
    */
   postConfig(config: ConfigModel): Observable<any> {
-    return this._http.post('/api/config', JSON.stringify(config), this.httpOptions);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this._http.post('/api/config', JSON.stringify(config), httpOptions);
   }
 
   // Data Services

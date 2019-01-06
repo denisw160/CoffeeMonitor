@@ -3,6 +3,7 @@
  */
 export class LoginModel {
 
+  user: String;
   success: boolean;
 
   constructor() {
