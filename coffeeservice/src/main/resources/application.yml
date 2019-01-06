@@ -39,5 +39,5 @@ app:
   web:
     user:
     password:
-  cors:
-    allowedOrigins:
+    cors:
+      allowedOrigins:

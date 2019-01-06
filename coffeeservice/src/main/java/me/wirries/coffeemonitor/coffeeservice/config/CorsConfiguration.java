@@ -21,7 +21,7 @@ public class CorsConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CorsConfiguration.class);
 
-    @Value("${app.cors.allowedOrigins}")
+    @Value("${app.web.cors.allowedOrigins}")
     private String allowedOrigins;
 
     @Bean
@@ -30,7 +30,7 @@ public class CorsConfiguration {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 if (StringUtils.isNotBlank(allowedOrigins)) {
-                    LOGGER.info("Enable CORS - allowed origins only from: " + allowedOrigins);
+                    LOGGER.info("Enable CORS - allowed origins only from: {}", allowedOrigins);
                     registry.addMapping("/api/*").allowedOrigins(allowedOrigins);
                 } else {
                     registry.addMapping("/api/*");
