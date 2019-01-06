@@ -53,13 +53,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .and()
                     .httpBasic().realmName("CoffeeService")
                     .and()
+                    .csrf().disable();
+            http
                     .sessionManagement()
                     .maximumSessions(50)
                     .sessionRegistry(sessionRegistry());
         } else {
             LOGGER.info("No user/password configured - disable security for all resources");
             http.authorizeRequests()
-                    .anyRequest().permitAll();
+                    .anyRequest().permitAll()
+                    .and()
+                    .csrf().disable();
         }
     }
 

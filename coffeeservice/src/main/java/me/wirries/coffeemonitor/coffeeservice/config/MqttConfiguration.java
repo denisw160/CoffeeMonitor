@@ -67,7 +67,7 @@ public class MqttConfiguration {
      * @return a new {@link MessageProducer} for the CoffeeSensor MQTT Topic
      */
     @Bean
-    public MessageProducer coffeeSensorProducer() {
+    public MessageProducer coffeeSensorMqttProducer() {
         LOGGER.info("Registering MQTT message producer for queue {} on server {} with client id {}",
                 mqttTopic, mqttUrl, getClientId());
 
