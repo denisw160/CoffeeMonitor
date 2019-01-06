@@ -21,6 +21,9 @@
 *.rar
 *.gz
 
+### Temp Files ###
+*.tmp
+
 ### Log Files ###
 *.log
 
