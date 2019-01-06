@@ -49,7 +49,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         if (isSecurityRequired()) {
             LOGGER.info("Enabling security for all resources");
             http.authorizeRequests()
+                    .antMatchers("/api/login").permitAll()
                     .anyRequest().authenticated()
+                    .and()
+                    .formLogin()
                     .and()
                     .httpBasic().realmName("CoffeeService")
                     .and()
@@ -119,7 +122,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         }
     }
 
-    private boolean isSecurityRequired() {
+    public boolean isSecurityRequired() {
         return StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password);
     }
 

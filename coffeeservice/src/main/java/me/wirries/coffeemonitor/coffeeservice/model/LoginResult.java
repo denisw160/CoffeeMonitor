@@ -11,10 +11,20 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public class LoginResult {
 
+    private String user;
     private boolean success;
 
-    public LoginResult(boolean success) {
+    public LoginResult(String user, boolean success) {
+        this.user = user;
         this.success = success;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public boolean isSuccess() {
@@ -28,6 +38,7 @@ public class LoginResult {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
+                .append("user", user)
                 .append("success", success)
                 .toString();
     }
