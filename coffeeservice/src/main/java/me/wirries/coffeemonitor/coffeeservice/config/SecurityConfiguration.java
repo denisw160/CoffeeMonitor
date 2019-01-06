@@ -59,7 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .csrf().disable();
             http
                     .sessionManagement()
-                    .maximumSessions(50)
+                    .maximumSessions(15)
                     .sessionRegistry(sessionRegistry());
         } else {
             LOGGER.info("No user/password configured - disable security for all resources");
@@ -94,7 +94,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new SessionRegistryImpl();
     }
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 60000)
     public void reportCurrentTime() {
         if (!logSessions && !isSecurityRequired()) return;
 

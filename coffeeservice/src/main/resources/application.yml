@@ -1,11 +1,15 @@
 ### Spring Boot Configuration ###
 spring:
-  # Database - MongoDB
+  # Data Configuration for MongoDB
   data:
     mongodb:
       host: ${app.db.host}
       database: ${app.db.database}
       port: ${app.db.port}
+
+  # Spring Session Configuration
+  session:
+    timeout: 1m
 
 # Logging - alternative you can use logback with log rotation
 logging.file: coffeeservice.log
@@ -20,7 +24,7 @@ logging:
     me:
       wirries:
         coffeemonitor:
-          coffeeservice: DEBUG
+          coffeeservice: INFO
 
 ## Application Configuration
 # You can override this parameter with the program arguments
