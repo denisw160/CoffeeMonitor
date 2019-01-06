@@ -15,7 +15,7 @@ spring:
 logging.file: coffeeservice.log
 logging:
   file:
-    max-size: 1MB
+    max-size: 5MB
     max-history: 10
   level:
     root: WARN
