@@ -31,9 +31,13 @@ app:
     port: 27017
   mqtt:
     url: tcp://localhost:1883
-    ssl: false
     topic: me/wirries/coffeesensor
     user:
     password:
     trustStore:
     trustStorePassword:
+  web:
+    user:
+    password:
+  cors:
+    allowedOrigins:
