@@ -4,11 +4,14 @@ import {ConfigComponent} from './config/config.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {ErrorComponent} from './error/error.component';
 import {HistoryComponent} from './history/history.component';
+import {LoginComponent} from './login/login.component';
+import {AuthGuard} from './_guard';
 
 const routes: Routes = [
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'history', component: HistoryComponent},
-  {path: 'config', component: ConfigComponent},
+  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
+  {path: 'history', component: HistoryComponent, canActivate: [AuthGuard]},
+  {path: 'config', component: ConfigComponent, canActivate: [AuthGuard]},
+  {path: 'login', component: LoginComponent},
   {
     path: '',
     redirectTo: '/dashboard',

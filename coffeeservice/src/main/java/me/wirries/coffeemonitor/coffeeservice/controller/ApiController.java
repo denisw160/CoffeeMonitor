@@ -1,5 +1,6 @@
 package me.wirries.coffeemonitor.coffeeservice.controller;
 
+import me.wirries.coffeemonitor.coffeeservice.config.SecurityConfiguration;
 import me.wirries.coffeemonitor.coffeeservice.model.*;
 import me.wirries.coffeemonitor.coffeeservice.repo.ConfigRepository;
 import me.wirries.coffeemonitor.coffeeservice.repo.SensorDataRepository;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,19 +35,42 @@ public class ApiController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiController.class);
 
+    private SecurityConfiguration securityConfiguration;
+
     private SensorDataRepository dataRepository;
     private ConfigRepository configRepository;
 
     /**
      * Constructor with AutoWiring the dependencies.
      *
-     * @param dataRepository Repository for the coffee sensor data
+     * @param securityConfiguration Configuration of the WebSecurity
+     * @param dataRepository        Repository for the coffee sensor data
+     * @param configRepository      Repository for the config data
      */
     @Autowired
-    public ApiController(SensorDataRepository dataRepository,
+    public ApiController(SecurityConfiguration securityConfiguration,
+                         SensorDataRepository dataRepository,
                          ConfigRepository configRepository) {
+        this.securityConfiguration = securityConfiguration;
         this.dataRepository = dataRepository;
         this.configRepository = configRepository;
+    }
+
+    /**
+     * This simple method return the result of the login. If the the user is authenticated,
+     * it return success=true.
+     *
+     * @return result of the login
+     */
+    @GetMapping("/login")
+    public LoginResult login(Principal principal) {
+        if (!securityConfiguration.isSecurityRequired())
+            return new LoginResult("anonymous", true);
+
+        if (principal == null)
+            return new LoginResult("notAuthenticated", false);
+
+        return new LoginResult(principal.getName(), true);
     }
 
     /**
