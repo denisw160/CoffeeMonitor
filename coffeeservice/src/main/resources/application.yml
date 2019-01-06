@@ -39,5 +39,6 @@ app:
   web:
     user:
     password:
+    logSessions: true
     cors:
       allowedOrigins:

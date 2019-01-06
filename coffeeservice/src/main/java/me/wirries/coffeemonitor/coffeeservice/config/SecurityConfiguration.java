@@ -6,13 +6,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This is the security configuration of the application. The restriction for basic authentication is only enabled,
@@ -27,11 +35,14 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityConfiguration.class);
+    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Value("${app.web.user}")
     private String username;
     @Value("${app.web.password}")
     private String password;
+    @Value("${app.web.logSessions}")
+    private boolean logSessions;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -40,7 +51,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             http.authorizeRequests()
                     .anyRequest().authenticated()
                     .and()
-                    .httpBasic().realmName("CoffeeService");
+                    .httpBasic().realmName("CoffeeService")
+                    .and()
+                    .sessionManagement()
+                    .maximumSessions(50)
+                    .sessionRegistry(sessionRegistry());
         } else {
             LOGGER.info("No user/password configured - disable security for all resources");
             http.authorizeRequests()
@@ -64,6 +79,39 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             return new InMemoryUserDetailsManager(user);
         } else {
             return new InMemoryUserDetailsManager();
+        }
+    }
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
+    @Scheduled(fixedRate = 10000)
+    public void reportCurrentTime() {
+        if (!logSessions && !isSecurityRequired()) return;
+
+        List<Object> allPrincipals = sessionRegistry().getAllPrincipals();
+        if (allPrincipals.isEmpty()) {
+            LOGGER.info("No logged in users found");
+            return;
+        }
+
+        // Collect all (not expired) sessions in a List
+        List<SessionInformation> sessions = allPrincipals.stream()
+                .filter(u -> !sessionRegistry().getAllSessions(u, false).isEmpty())
+                .map(u -> sessionRegistry().getAllSessions(u, false))
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+
+        // Log sessions to LOGGER
+        LOGGER.info("Logging {} open sessions ...", sessions.size());
+        LOGGER.info("SessionId \t\t\t\t\t\t\t UserId \t Last request");
+        for (SessionInformation s : sessions) {
+            LOGGER.info("{} \t {} \t\t {}",
+                    s.getSessionId(),
+                    ((User) s.getPrincipal()).getUsername(),
+                    FORMAT.format(s.getLastRequest()));
         }
     }
 
