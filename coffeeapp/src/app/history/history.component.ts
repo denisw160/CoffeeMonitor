@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {timer} from 'rxjs';
 import * as Chart from 'chart.js';
 import * as moment from 'moment';
-import {ApiService} from '../api.service';
+import {ApiService} from '../_service';
 
 @Component({
   selector: 'app-history',

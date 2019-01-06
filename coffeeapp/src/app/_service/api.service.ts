@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import 'rxjs/add/operator/map';
-import {AliveModel, ConfigModel, ConsumptionModel, SensordataModel} from './_model/';
-import {environment} from '../environments/environment';
+import {AliveModel, ConfigModel, ConsumptionModel, SensordataModel} from '../_model';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
