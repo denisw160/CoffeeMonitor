@@ -14,10 +14,10 @@
 NAME=coffee-app
 TAG=latest
 
-BASEHREF=/
+BASE_HREF=/
 
 if [ -n "$1" ]; then
-    BASEHREF=$1
+    BASE_HREF=$1
 fi
 
 # Remove unused images
@@ -26,7 +26,7 @@ fi
 
 # Building the image
 echo Building the image
-docker build --build-arg basehref=$BASEHREF -t $NAME:$TAG .
+docker build --build-arg BASE_HREF=$BASE_HREF -t $NAME:$TAG .
 
 # Running the container
 # Container needs the camera-service as linked container with name apiserver

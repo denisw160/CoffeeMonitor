@@ -21,17 +21,17 @@ COPY --from=builder /java-app/target/coffeeservice.jar /
 EXPOSE 8080
 
 # Parameter for the execution
-ENV dbHost=db
-ENV dbPort=27017
-ENV database=coffeeservice
-ENV mqttUrl=tcp://mqtt:1883
-ENV mqttUser=
-ENV mqttPassword=
-ENV mqttTruststore=
-ENV mqttTruststorePassword=
-ENV webUser=
-ENV webPassword=
-ENV logSessions=false
+ENV DB_HOST=db
+ENV DB_PORT=27017
+ENV DATABASE=coffeeservice
+ENV MQTT_URL=tcp://mqtt:1883
+ENV MQTT_USER=
+ENV MQTTPASSWORD=
+ENV MQTT_TRUSTSTORE=
+ENV MQTT_TRUSTSTORE_PASSWORD=
+ENV WEB_USER=
+ENV WEB_PASSWORD=
+ENV LOG_SESSIONS=false
 
 # Copy run script
 COPY docker_entrypoint.sh /entrypoint.sh

@@ -9,11 +9,11 @@ COPY src/*.py ./
 COPY test/*.py ./
 
 # Parameter for the execution
-ENV mqttServer=mqtt
-ENV mqttPort=1883
-ENV mqttUser=
-ENV mqttPassword=
-ENV sslCa=
+ENV MQTT_SERVER=mqtt
+ENV MQTT_PORT=1883
+ENV MQTT_USER=
+ENV MQTT_PASSWORD=
+ENV SSL_CA=
 
 # Copy run script
 COPY docker_entrypoint.sh /entrypoint.sh

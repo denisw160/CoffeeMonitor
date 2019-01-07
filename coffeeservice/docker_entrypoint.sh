@@ -5,38 +5,39 @@
 
 PARAMS="--spring.profiles.active=production"
 
-if [ ! -z "$dbHost" ]; then
-    PARAMS="$PARAMS --app.db.host=$dbHost"
+if [ ! -z "$DB_HOST" ]; then
+    PARAMS="$PARAMS --app.db.host=$DB_HOST"
 fi
-if [ ! -z "$dbPort" ]; then
-    PARAMS="$PARAMS --app.db.port=$dbPort"
+if [ ! -z "$DB_PORT" ]; then
+    PARAMS="$PARAMS --app.db.port=$DB_PORT"
 fi
-if [ ! -z "$database" ]; then
-    PARAMS="$PARAMS --app.db.database=$database"
+if [ ! -z "$DATABASE" ]; then
+    PARAMS="$PARAMS --app.db.database=$DATABASE"
 fi
-if [ ! -z "$mqttUrl" ]; then
-    PARAMS="$PARAMS --app.mqtt.url=$mqttUrl"
+if [ ! -z "$MQTT_URL" ]; then
+    PARAMS="$PARAMS --app.mqtt.url=$MQTT_URL"
 fi
-if [ ! -z "$mqttUser" ]; then
-    PARAMS="$PARAMS --app.mqtt.user=$mqttUser"
+if [ ! -z "$MQTT_USER" ]; then
+    PARAMS="$PARAMS --app.mqtt.user=$MQTT_USER"
 fi
-if [ ! -z "$mqttUser" ]; then
-    PARAMS="$PARAMS --app.mqtt.password=$mqttPassword"
+if [ ! -z "$MQTT_PASSWORD" ]; then
+    PARAMS="$PARAMS --app.mqtt.password=$MQTT_PASSWORD"
 fi
-if [ ! -z "$mqttTruststore" ]; then
-    PARAMS="$PARAMS --app.mqtt.trustStore=$mqttTruststore"
+if [ ! -z "$MQTT_TRUSTSTORE" ]; then
+    PARAMS="$PARAMS --app.mqtt.trustStore=$MQTT_TRUSTSTORE"
 fi
-if [ ! -z "$mqttTruststorePassword" ]; then
-    PARAMS="$PARAMS --app.mqtt.trustStorePassword=$mqttTruststorePassword"
+if [ ! -z "$MQTT_TRUSTSTORE_PASSWORD" ]; then
+    PARAMS="$PARAMS --app.mqtt.trustStorePassword=$MQTT_TRUSTSTORE_PASSWORD"
 fi
-if [ ! -z "$webUser" ]; then
-    PARAMS="$PARAMS --app.web.user=$webUser"
+if [ ! -z "$WEB_USER" ]; then
+    PARAMS="$PARAMS --app.web.user=$WEB_USER"
 fi
-if [ ! -z "$webPassword" ]; then
-    PARAMS="$PARAMS --app.web.password=$webPassword"
+if [ ! -z "$WEB_PASSWORD" ]; then
+    PARAMS="$PARAMS --app.web.password=$WEB_PASSWORD"
 fi
-if [ ! -z "$logSessions" ]; then
-    PARAMS="$PARAMS --app.web.logSessions=$logSessions"
+if [ ! -z "$LOG_SESSIONS" ]; then
+    PARAMS="$PARAMS --app.web.logSessions=$LOG_SESSIONS"
 fi
 
+echo "Starting parameters: $PARAMS"
 /usr/bin/java -jar coffeeservice.jar $PARAMS
