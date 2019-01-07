@@ -33,5 +33,8 @@ ENV webUser=
 ENV webPassword=
 ENV logSessions=false
 
+# Copy run script
+COPY docker_entrypoint.sh /entrypoint.sh
+
 # Run service
-ENTRYPOINT [ "/usr/bin/java", "-jar", "coffeeservice.jar", "--spring.profiles.active=production", "--app.db.host=${dbHost}", "--app.db.port=${dbPort}", "--app.db.database=${database}", "--app.mqtt.url=${mqttUrl}", "--app.mqtt.user=${mqttUser}", "--app.mqtt.password=${mqttPassword}", "--app.mqtt.trustStore=${mqttTruststore}", "--app.mqtt.trustStorePassword=${mqttTruststorePassword}", "--app.web.user=${webUser}", "--app.web.password=${webPassword}", "--app.web.logSessions=${logSessions}" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
