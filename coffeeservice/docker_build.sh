@@ -20,10 +20,10 @@ docker build -t $NAME:$TAG .
 
 # Running the container
 #echo Running the container on port 8889
-#docker run --rm -it --name coffee-service -p 8889:8080 --link coffee-mongodb:db $NAME:$TAG
+#docker run --rm -it --name coffee-service -p 8889:8080 --link coffee-mongodb:db --link coffee-mosquitto:mqtt $NAME:$TAG
 
 ## need database
 #docker run -d --name coffee-mongodb --restart always -v coffee-mongodb-data:/data/db mongo:latest
 
 ## need mosquitto mqtt broker
-#docker run -d --name mosquitto --restart always -p 1883:1883 -p 9001:9001 -v mosquitto-conf:/mosquitto/config -v mosquitto-data:/mosquitto/data -v mosquitto-log:/mosquitto/log eclipse-mosquitto:latest
+#docker run -d --name coffee-mosquitto --restart always -p 1883:1883 -v coffee-mosquitto-conf:/mosquitto/config -v coffee-mosquitto-data:/mosquitto/data -v coffee-mosquitto-log:/mosquitto/log eclipse-mosquitto:latest
