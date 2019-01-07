@@ -9,6 +9,7 @@ WORKDIR /ng-app
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 RUN npm i
+
 # Building the app
 COPY . .
 RUN echo "Set base-href to ${BASEHREF}"
