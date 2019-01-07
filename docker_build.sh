@@ -13,6 +13,13 @@ BASEHREF=/
 # Variables
 WORKDIR=$(pwd)
 
+# Remove unused images
+#echo Remove unused images
+#docker image prune -a -f
+
+cd $WORKDIR/coffeesensor
+./docker_build.sh
+
 cd $WORKDIR/coffeeservice
 ./docker_build.sh
 
