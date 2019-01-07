@@ -4,11 +4,14 @@ FROM node:10-alpine as builder
 # Build argument for the base url
 ARG BASEHREF=/
 
-# Building the app
+# Prepare the build (if no changes in package.json, the cache will used)
 WORKDIR /ng-app
+COPY package.json package.json
+COPY package-lock.json package-lock.json
+RUN npm i
+# Building the app
 COPY . .
 RUN echo "Set base-href to ${BASEHREF}"
-RUN npm i
 RUN $(npm bin)/ng build --configuration=production --base-href ${BASEHREF}
 
 ### STAGE 2: Setup the image
@@ -21,4 +24,4 @@ COPY nginx.conf /etc/nginx/nginx.conf
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy the files from builder
-COPY --from=builder /ng-app/dist/camera-app /usr/share/nginx/html
+COPY --from=builder /ng-app/dist/coffeeapp /usr/share/nginx/html
