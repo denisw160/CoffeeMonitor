@@ -4,7 +4,8 @@
 #
 # User must have access to Docker.
 #
-# Usage: ./docker_build.sh
+# Usage: ./docker_build.sh [/yourPath/]
+#  - setup the basehref to /yourPath/ in your Angular app
 # 
 
 # Parameter for the build, modify if needed
@@ -12,6 +13,10 @@ BASEHREF=/
 
 # Variables
 WORKDIR=$(pwd)
+
+if [ -n "$1" ]; then
+    BASE_HREF=$1
+fi
 
 # Remove unused images
 #echo Remove unused images
