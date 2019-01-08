@@ -24,6 +24,31 @@ docker rm coffee-testsensor
 docker rm coffee-mosquitto
 docker rm coffee-mongodb
 
+## Additional environment parameter for the containers
+# coffee-service
+# -e DB_HOST=db
+# -e DB_PORT=27017
+# -e DATABASE=coffeeservice
+# -e MQTT_URL=tcp://mqtt:1883
+# -e MQTT_USER=
+# -e MQTTPASSWORD=
+# -e MQTT_TRUSTSTORE=
+# -e MQTT_TRUSTSTORE_PASSWORD=
+# -e WEB_USER=
+# -e WEB_PASSWORD=
+# -e LOG_SESSIONS=false
+
+# coffee-sensor
+# -e MQTT_SERVER=mqtt
+# -e MQTT_PORT=1883
+# -e MQTT_USER=
+# -e MQTT_PASSWORD=
+# -e SSL_CA=
+
+# coffee-app
+# TODO implement ENV & script
+# -e BASE_HREF=/
+
 # Run the containers
 docker run -d --name coffee-mongodb -p 27017:27017 -v coffee-mongodb-data:/data/db mongo:latest
 docker run -d --name coffee-mosquitto -p 1883:1883 -v coffee-mosquitto-conf:/mosquitto/config -v coffee-mosquitto-data:/mosquitto/data -v coffee-mosquitto-log:/mosquitto/log eclipse-mosquitto:latest
