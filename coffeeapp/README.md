@@ -62,4 +62,10 @@ The run script can be used to build and start the server on the local console (f
 For clean and building the service the following scripts can be used.
 
     bash>clean.sh
-    bash>build.sh
+    bash>build.sh [/yourPath/]
+
+With the optional parameter `/yourPath/` you can change the base-href of the Angular App.
+
+To start the Docker build, execute this script
+
+    bash>docker_build.sh [/yourPath/]
