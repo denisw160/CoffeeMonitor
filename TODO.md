@@ -5,6 +5,7 @@
 - Creating docker images for deployment
 - Add reset button for ESP8266
 - Add JWT for securing the connection and active CSRF for POST requests
+- Implement cleanup job for old data
 
 ## Ideas and next steps
 
