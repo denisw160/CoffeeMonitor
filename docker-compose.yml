@@ -1,0 +1,43 @@
+version: "3"
+services:
+  coffee-mongodb:
+    image: mongo:latest
+    #ports: 
+    #  - 27017:27017
+    volumes: 
+      - coffee-mongodb-data:/data/db
+    #restart: unless-stopped
+  coffee-mosquitto:
+    image: eclipse-mosquitto:latest
+    #ports: 
+    #  - 1883:1883
+    volumes: 
+      - coffee-mosquitto-conf:/mosquitto/config
+      - coffee-mosquitto-data:/mosquitto/data
+      - coffee-mosquitto-log:/mosquitto/log
+    #restart: unless-stopped
+  coffee-testsensor:
+    image: coffee-sensor:latest
+    links: 
+      - coffee-mosquitto:mqtt
+    #restart: unless-stopped 
+  coffee-service:
+    image: coffee-service:latest
+    #ports: 
+    #  - 8080:8080
+    links: 
+      - coffee-mongodb:db
+      - coffee-mosquitto:mqtt
+    #restart: unless-stopped
+  coffee-app:
+    image: coffee-app
+    ports:
+      - 80:80
+    links:
+      - coffee-service:apiserver
+    #restart: unless-stopped
+volumes:
+    coffee-mongodb-data: {}
+    coffee-mosquitto-conf: {}
+    coffee-mosquitto-data: {}
+    coffee-mosquitto-log: {}
