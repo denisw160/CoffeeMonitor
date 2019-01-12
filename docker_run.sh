@@ -46,7 +46,6 @@ docker rm coffee-mongodb
 # -e SSL_CA=
 
 # coffee-app
-# TODO implement ENV & script
 # -e BASE_HREF=/
 
 # Run the containers

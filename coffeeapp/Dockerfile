@@ -18,6 +18,9 @@ RUN $(npm bin)/ng build --configuration=production --base-href ${BASE_HREF}
 ### STAGE 2: Setup the image
 FROM nginx:alpine
 
+# Environment variable to change the base url
+ENV BASE_HREF=/
+
 # Copy the configuration
 COPY nginx.conf /etc/nginx/nginx.conf
 
@@ -26,3 +29,12 @@ RUN rm -rf /usr/share/nginx/html/*
 
 # Copy the files from builder
 COPY --from=builder /ng-app/dist/coffeeapp /usr/share/nginx/html
+
+# Copy run script
+COPY docker_entrypoint.sh /entrypoint.sh
+
+# Run initialisation
+ENTRYPOINT [ "/entrypoint.sh" ]
+
+# Run nginx
+CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
