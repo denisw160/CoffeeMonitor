@@ -1,8 +1,6 @@
 ## Tasks and open points
 
 - Design of the scale casing for determining the weight of the coffee pot (protected against moisture and excessive weights / pressure on the coffee pot)
-- Adding parameter for server configuration (urls to mqtt, service, database, ...)
-- Creating docker images for deployment
 - Add reset button for ESP8266
 - Add JWT for securing the connection and active CSRF for POST requests
 - Implement cleanup job for old data
