@@ -15,7 +15,7 @@ BASEHREF=/
 WORKDIR=$(pwd)
 
 if [ -n "$1" ]; then
-    BASE_HREF=$1
+    BASEHREF=$1
 fi
 
 # Remove unused images
