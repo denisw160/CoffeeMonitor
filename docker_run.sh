@@ -31,7 +31,7 @@ docker rm coffee-mongodb
 # -e DATABASE=coffeeservice
 # -e MQTT_URL=tcp://mqtt:1883
 # -e MQTT_USER=
-# -e MQTTPASSWORD=
+# -e MQTT_PASSWORD=
 # -e MQTT_TRUSTSTORE=
 # -e MQTT_TRUSTSTORE_PASSWORD=
 # -e WEB_USER=
