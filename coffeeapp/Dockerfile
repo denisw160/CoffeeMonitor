@@ -19,7 +19,7 @@ RUN $(npm bin)/ng build --configuration=production --base-href ${BASE_HREF}
 FROM nginx:alpine
 
 # Environment variable to change the base url
-ENV BASE_HREF=/
+ENV BASE_HREF=
 
 # Copy the configuration
 COPY nginx.conf /etc/nginx/nginx.conf
