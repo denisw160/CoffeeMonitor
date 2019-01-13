@@ -25,9 +25,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const alive = this._api.getAlive();
     alive.subscribe(a => {
       if (a.alive) {
-        document.getElementById('coffee-status').setAttribute('src', '../../assets/status-info.png');
+        document.getElementById('coffee-status').setAttribute('src', 'assets/status-info.png');
       } else {
-        document.getElementById('coffee-status').setAttribute('src', '../../assets/status-warning.png');
+        document.getElementById('coffee-status').setAttribute('src', 'assets/status-warning.png');
       }
     });
   }
@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         // Reduce the weight of the coffee pot - values only for the coffee
         const div = c.maxWeight / 6.0;
         const step = Math.min(Math.floor(Math.max(d.weight - c.potWeight, 0) / div), 5);
-        document.getElementById('coffee-level').setAttribute('src', '../../assets/level-' + step + '.png');
+        document.getElementById('coffee-level').setAttribute('src', 'assets/level-' + step + '.png');
 
         // Update progressbar
         const percentage = Math.round((Math.max(d.weight - c.potWeight, 0) * 100) / c.maxWeight);
@@ -63,9 +63,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         // Update allocation
         if (d.allocated) {
-          document.getElementById('coffee-allocated').setAttribute('src', '../../assets/coffee-allocated.png');
+          document.getElementById('coffee-allocated').setAttribute('src', 'assets/coffee-allocated.png');
         } else {
-          document.getElementById('coffee-allocated').setAttribute('src', '../../assets/coffee-not-allocated.png');
+          document.getElementById('coffee-allocated').setAttribute('src', 'assets/coffee-not-allocated.png');
         }
 
         // Set last updated
