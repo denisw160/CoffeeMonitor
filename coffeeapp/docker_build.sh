@@ -29,6 +29,6 @@ echo Building the image
 docker build --build-arg BASE_HREF=$BASE_HREF -t $NAME:$TAG .
 
 # Running the container
-# Container needs the camera-service as linked container with name apiserver
+# Container needs the coffee-service as linked container with name apiserver
 #echo Running the container on port 8888
 #docker run --rm -it --name coffee-app --link coffee-service:apiserver -p 8888:80 $NAME:$TAG

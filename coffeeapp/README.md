@@ -16,7 +16,7 @@ UI is using Bootstrap.
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload 
 if you change any of the source files.
 
-The backend service runs `http://localhost:80808/`. ng serve will redirect all requests .../api to this
+The backend service runs `http://localhost:8080/`. ng serve will redirect all requests .../api to this
 service.
 
 #### Code scaffolding
